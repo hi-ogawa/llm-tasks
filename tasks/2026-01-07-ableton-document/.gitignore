@@ -1,0 +1,5 @@
+# Downloaded HTML and converted markdown (regenerate with wget + scripts)
+/data/
+
+# Python virtual environment
+/.venv/
