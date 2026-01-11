@@ -1,0 +1,20 @@
+.venv/
+data/
+*.pyc
+__pycache__/
+
+# Audio files
+*.wav
+*.mp3
+*.mp4
+*.m4a
+*.flac
+
+# MIDI files (generated)
+*.mid
+*.midi
+
+# Model artifacts
+*.pt
+*.bin
+checkpoints/
