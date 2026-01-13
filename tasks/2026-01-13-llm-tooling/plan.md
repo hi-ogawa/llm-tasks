@@ -210,13 +210,56 @@ See `notes/workflow-patterns.md` for detailed analysis.
 - Reference via `@prompts/file.md` in conversation
 - Works with any tool, version controlled, evolves with project
 
+### Session 2 (2026-01-13) - Permission Systems Research
+
+**Researched permission levels for autonomous long tasks:**
+
+Core question: How do agents avoid blocking during long autonomous tasks?
+
+**Findings by agent:**
+
+1. **Claude Code** - Most sophisticated system:
+   - Notification hooks: `permission_prompt`, `idle_prompt` events can trigger external alerts
+   - Granular permissions: Pattern-based allow/deny rules per tool
+   - Multiple modes: `default`, `plan`, `acceptEdits`, `dontAsk`, `bypassPermissions`
+   - Optional sandboxing with `autoAllowBashIfSandboxed`
+   - **Key advantage:** Only agent with notification hooks for alerting when blocked
+
+2. **OpenCode** - Good but lacks notifications:
+   - Three actions: `allow`, `ask`, `deny` per tool
+   - Glob-pattern matching for bash commands (e.g., `"git *": "allow"`)
+   - Per-agent permission overrides
+   - `always` approval option during session (session-scoped memory)
+   - **Missing:** No notification hook system - must watch terminal
+
+3. **Codex CLI (OpenAI)** - Sandbox-focused approach:
+   - Two layers: sandbox mode + approval policy
+   - Sandbox modes: `read-only`, `workspace-write`, `danger-full-access`
+   - `--full-auto` preset for normal development
+   - `--yolo` (alias for `--dangerously-bypass-approvals-and-sandbox`)
+   - **Missing:** No notification hooks
+
+4. **Gemini CLI (Google)** - Trust-based model:
+   - Folder trust system (trusted/untrusted)
+   - Sandboxing via macOS Seatbelt or Docker/Podman
+   - `/permissions` command to manage trust
+   - **Missing:** No notification hooks
+
+**Key insight:** Claude Code's notification hook (`Notification` event with `permission_prompt` matcher) is unique and critical for long-running tasks. Other agents require either:
+- More permissive defaults (higher risk)
+- Constant terminal monitoring
+- Sandboxing (reduced capability)
+
+See `notes/agent-permissions.md` for detailed comparison.
+
 ---
 
 ## Follow-up Actions
 
-- [ ] **Explore Codex CLI (OpenAI)** - Does it support plan mode, rewinding, context hygiene?
-- [ ] **Explore gemini-cli (Google)** - Same questions
+- [x] **Explore Codex CLI (OpenAI)** - Permission system researched (sandbox + approval modes)
+- [x] **Explore gemini-cli (Google)** - Folder trust system researched
 - [ ] **Test custom opencode agents** - Create research/verify/synthesize agents, test on new task
 - [ ] **Evaluate Claude Desktop + MCP** - Does MCP bridge consumer chat capabilities gap?
 - [ ] **Survey web-based agent UIs** - Open WebUI, LibreChat, etc.
 - [ ] **Document CI-like patterns** - When is autonomous execution better than interactive?
+- [ ] **Consider opencode notification feature request** - Would benefit long-running tasks
