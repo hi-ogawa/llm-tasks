@@ -1,72 +1,222 @@
-# Plan: Understanding LLM Tooling Internals
+# Plan: LLM Tooling for Knowledge Work
 
 ## Problem Statement
 
-Claude Code is a powerful agentic coding assistant, but its internals are closed. To build mental models of how such systems work - and potentially build custom tooling - we need to study open implementations.
+Consumer chat interfaces (Claude.ai, ChatGPT) have good UX but produce worse results for deep inquiry compared to local agents with tool access. The goal is to find or build a better solution that combines:
 
-**Key questions:**
-1. How are system prompts structured for agentic behavior?
-2. How are tools defined, registered, and executed?
-3. How do subagents work (spawning, context passing, coordination)?
-4. How is context managed across multi-step interactions?
-5. What patterns are common vs. implementation-specific?
+- **Good conversational UX** (web chat-like)
+- **Tool capabilities** (file access, web fetch, verification)
+- **Persistent artifacts** (structured documents that survive sessions)
 
-## Reference Implementation
+## Concrete Use Case
 
-**opencode** - https://github.com/opencode-ai/opencode
+**Deep inquiry workflow** (exemplified by `tasks/2026-01-07-ableton-document/`):
 
-An open-source AI-powered coding CLI written in Go. Chosen because:
-- Fully open source (can read everything)
-- Similar feature set to Claude Code
-- Active development
-- Clean codebase
+1. **Exploration** - Ask questions about a new domain with personal context
+2. **Verification** - Cross-reference LLM responses against authoritative sources
+3. **Synthesis** - Build structured documents combining verified knowledge + personal context
+4. **Iteration** - Refine and expand documents across multiple sessions
 
-## Exploration Areas
+**Why local agents excel at this:**
+- Can read/write files (persistent artifacts)
+- Can fetch and verify against sources
+- Can run scripts (e.g., convert documentation formats)
+- Context accumulates in filesystem, not just conversation
 
-### 1. System Prompt Architecture
-- [ ] Locate and analyze the main system prompt
-- [ ] Identify how tool descriptions are injected
-- [ ] Study prompt structure (persona, rules, capabilities)
-- [ ] Compare with Claude Code's observable behavior
+**Why consumer chat falls short:**
+- No filesystem access
+- No web fetching (or limited)
+- Artifacts are ephemeral (must copy-paste)
+- Context resets between sessions (memory features are limited)
 
-### 2. Tool Implementation
-- [ ] Map out all built-in tools (Read, Write, Bash, etc.)
-- [ ] Understand tool registration/discovery mechanism
-- [ ] Study tool execution flow (validation, execution, result handling)
-- [ ] Analyze error handling and retry patterns
+## Research Areas
 
-### 3. Subagent Architecture
-- [ ] Identify how/when subagents are spawned
-- [ ] Study context passing between agents
-- [ ] Understand agent coordination patterns
-- [ ] Analyze resource/token management across agents
+### 1. Consumer Chat Capabilities Assessment
 
-### 4. Context Management
-- [ ] Study conversation history handling
-- [ ] Understand summarization strategies (if any)
-- [ ] Analyze file/codebase context injection
-- [ ] Study how large contexts are managed
+Evaluate what's actually possible with current consumer offerings:
 
-### 5. Provider Abstraction
-- [ ] How multiple LLM providers are supported
-- [ ] Tool schema translation between providers
-- [ ] Streaming implementation
-- [ ] Rate limiting and error handling
+- [ ] **Claude.ai Projects** - File upload, project context, artifacts
+- [ ] **ChatGPT Canvas** - Document editing experience
+- [ ] **Claude Artifacts** - Code/document generation and iteration
+- [ ] **Memory features** - Cross-session context persistence
+- [ ] **MCP in Claude Desktop** - Does this bridge the gap?
 
-## Outputs
+**Key question**: Can any combination of these features approximate the local agent workflow?
 
-- Annotated notes on each exploration area
-- Architecture diagrams where helpful
-- Comparison notes: opencode vs. Claude Code (observed)
-- Potentially: small experimental scripts testing specific patterns
+### 2. Web-Based Agent Interfaces
 
-## Resources
+Survey alternatives that provide chat UX with agent capabilities:
 
-- [opencode source](https://github.com/opencode-ai/opencode)
-- [Vercel AI SDK](https://github.com/vercel/ai) - tool schema translation layer
-- [Anthropic Tool Use docs](https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview)
-- [OpenAI Function Calling docs](https://platform.openai.com/docs/guides/function-calling)
+- [ ] **Open WebUI** - Self-hosted, supports tools/functions
+- [ ] **LibreChat** - Multi-provider, plugin support
+- [ ] **LobeChat** - Modern UI, plugin ecosystem
+- [ ] **Anything LLM** - Document-focused, RAG capabilities
+- [ ] **Anthropic Claude API + custom UI** - Build something minimal
+
+**Key question**: Do any of these support the tool access needed for verification/file workflows?
+
+### 3. Hybrid Approaches
+
+Explore workflows that combine chat + agent:
+
+- [ ] **Chat for exploration, agent for execution** - Use chat to think, agent to do
+- [ ] **Agent with web UI** - Run opencode/similar with a web frontend
+- [ ] **Custom MCP servers** - Add capabilities to Claude Desktop
+
+### 4. Other CLI Agents
+
+Compare workflow support across CLI agents:
+
+- [x] **Claude Code** - Plan mode, rewind, subagents (primary tool)
+- [x] **opencode** - Plan/Build modes, undo/redo, agents/subagents (explored)
+- [ ] **Codex CLI (OpenAI)** - Does it support plan mode? Rewind?
+- [ ] **gemini-cli (Google)** - Does it support plan mode? Rewind?
+
+**Key question**: Do these agents support the essential patterns (mode switching, rewinding, context hygiene)?
+
+### 5. CI-like Autonomous Agents
+
+Different pattern for defined tasks:
+
+- [x] **GitHub Copilot agent** - Works well for pre-defined coding tasks
+- [ ] **Could this pattern work for research?** - Pre-define scope, run autonomously, review output
+
+**Key question**: When is autonomous execution better than interactive iteration?
+
+### 6. Understanding What's Actually Needed
+
+Document the minimal capabilities required:
+
+- [x] **File read/write** - For persistent artifacts
+- [x] **Web fetch** - For source verification
+- [x] **Mode switching** - Plan (read-only) vs Build (full access)
+- [x] **Chat rewinding** - Clean iteration, avoid context pollution
+- [ ] **Session persistence** - Or filesystem as persistence layer
+- [ ] **Structured output** - Markdown documents, not just chat
+
+**Key question**: What's the simplest setup that provides these?
+
+## Architecture Understanding (Background)
+
+Understanding internals helps evaluate/build solutions:
+
+### Already Documented
+- `notes/llm-tools-api.md` - How function calling works at API level
+- `notes/claude-code-skills.md` - Progressive disclosure and skill system
+
+### To Explore (If Needed)
+- System prompt patterns for agentic behavior
+- Tool registration and execution flow
+- Context management strategies
+- Provider abstraction (for multi-provider solutions)
+
+**Reference implementations:**
+- [opencode](https://github.com/opencode-ai/opencode) - Open source Claude Code alternative
+- [Vercel AI SDK](https://github.com/vercel/ai) - Tool schema translation
+
+## Possible Outcomes
+
+1. **Recommend existing solution** - Find a web-based tool that works
+2. **Document a hybrid workflow** - Combine chat + agent effectively
+3. **Document task-dependent patterns** - When to use interactive vs. autonomous
+4. **Build minimal custom tooling** - If nothing exists, build it
+5. **Create custom agents/commands** - For specific research workflows
+6. **Accept the tradeoff** - Document when to use chat vs. agent
 
 ## Progress
 
-_To be updated as exploration proceeds._
+### Session 1 (2026-01-13)
+
+**Reframed the problem:**
+- Original framing: "understand LLM tooling internals"
+- Actual goal: "improve knowledge work with LLMs"
+- Key insight: The question is about *interface and workflow*, not just understanding internals
+
+**Identified the core tension:**
+- Web chat = good UX, limited capabilities
+- Local agents = powerful capabilities, terminal UX friction
+
+**Meta-experiment:**
+- This session itself is using opencode + Claude Opus 4.5 for research
+- Started in Plan mode (read-only exploration), switched to Build mode for documentation
+- Demonstrates the explore → capture workflow pattern
+- See `notes/opencode-usage.md` for observations
+
+**Opencode-specific exploration added:**
+- Agents (Plan/Build) are the core abstraction, not just "modes"
+- Full customization: custom agents, commands, permissions
+- System-reminder injection for mid-conversation behavior changes
+
+**Researched opencode documentation:**
+- Agents can be primary (Tab to switch) or subagents (@mention)
+- Custom agents via JSON config or markdown files
+- Commands are prompt templates with argument support
+- Rich permission system (ask/allow/deny per tool)
+
+**Identified potential custom agents for knowledge work:**
+1. **Research agent** - webfetch enabled, file write disabled
+2. **Verify agent** - focused on source verification
+3. **Synthesize agent** - organize verified info into documents
+
+See `notes/opencode-usage.md` for detailed findings.
+
+**Next steps:**
+- Create and test custom agents for research workflows
+- Research consumer chat capabilities (Claude Projects, MCP) for comparison
+- Survey web-based agent interfaces
+- Document friction points during continued use
+
+### Session 1 Continued
+
+**Explored opencode source directly:**
+- Read prompt files at `packages/opencode/src/session/prompt/`
+- Found base prompt (`anthropic.txt`), plan prompts, build-switch injection
+- Understood the layered architecture: base + agent-specific + system-reminders
+
+**Discovered real-world agent/command examples:**
+- `.opencode/agent/docs.md` - Documentation writing agent
+- `.opencode/agent/triage.md` - Hidden agent with restricted tools
+- `.opencode/command/commit.md` - Commit with `subtask: true`
+- `.opencode/command/rmslop.md` - Remove AI code patterns
+
+**Experienced Plan mode permission blocking:**
+- Tried to edit file in Plan mode → blocked by permission system
+- Showed rules: `{"permission":"edit","pattern":"*","action":"deny"}`
+- Exception for plan files: `.opencode/plan/*.md`
+- This is exactly the safety mechanism for read-only exploration
+
+**Key insight:** Local source is better than web docs for understanding internals. Agent's filesystem access makes this natural.
+
+**Identified essential workflow patterns:**
+1. **Mode switching (Plan/Build)** - Ergonomic, prevents premature changes
+2. **Chat rewinding** - Essential for clean iteration, avoids context pollution
+3. **Context hygiene** - Subtasks, subagents, knowing when to start fresh
+
+**Expanded scope:**
+- Other CLI agents to explore: Codex CLI (OpenAI), gemini-cli (Google)
+- CI-like isolated usage: GitHub Copilot agent works well for defined tasks
+- Task-dependent patterns: fuzzy exploration vs. defined coding tasks
+
+See `notes/workflow-patterns.md` for detailed analysis.
+
+**Compared Claude Code vs Opencode integration level:**
+- Opencode: System prompt strongly coding-oriented ("best coding agent on the planet")
+- Claude Code: More general feel, same "vibe" as web Claude
+- Both work for non-coding, but Claude Code requires less steering
+- Korean language project (5,000+ vocab cards) works well with Claude Code
+
+**Project-level prompting pattern:**
+- Build up guidance in project files (`prompts/requirements-*.md`)
+- Reference via `@prompts/file.md` in conversation
+- Works with any tool, version controlled, evolves with project
+
+---
+
+## Follow-up Actions
+
+- [ ] **Explore Codex CLI (OpenAI)** - Does it support plan mode, rewinding, context hygiene?
+- [ ] **Explore gemini-cli (Google)** - Same questions
+- [ ] **Test custom opencode agents** - Create research/verify/synthesize agents, test on new task
+- [ ] **Evaluate Claude Desktop + MCP** - Does MCP bridge consumer chat capabilities gap?
+- [ ] **Survey web-based agent UIs** - Open WebUI, LibreChat, etc.
+- [ ] **Document CI-like patterns** - When is autonomous execution better than interactive?
