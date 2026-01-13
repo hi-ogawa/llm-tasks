@@ -250,6 +250,10 @@ Core question: How do agents avoid blocking during long autonomous tasks?
 - Constant terminal monitoring
 - Sandboxing (reduced capability)
 
+**Update:** OpenCode already has `session.idle` event in its bus system! Plugins can subscribe to it. Active development:
+- PR #7672 adds native `input_required` notification hooks
+- Community plugins: `opencode-message-notify` (iOS/Bark), `opencode-ntfy` (cross-platform)
+
 See `notes/agent-permissions.md` for detailed comparison.
 
 ---
@@ -258,8 +262,9 @@ See `notes/agent-permissions.md` for detailed comparison.
 
 - [x] **Explore Codex CLI (OpenAI)** - Permission system researched (sandbox + approval modes)
 - [x] **Explore gemini-cli (Google)** - Folder trust system researched
+- [x] **Research opencode notification system** - `session.idle` event exists, PR #7672 in progress
 - [ ] **Test custom opencode agents** - Create research/verify/synthesize agents, test on new task
 - [ ] **Evaluate Claude Desktop + MCP** - Does MCP bridge consumer chat capabilities gap?
 - [ ] **Survey web-based agent UIs** - Open WebUI, LibreChat, etc.
 - [ ] **Document CI-like patterns** - When is autonomous execution better than interactive?
-- [ ] **Consider opencode notification feature request** - Would benefit long-running tasks
+- [ ] **Try opencode notification plugin** - Test `opencode-ntfy` or create custom plugin

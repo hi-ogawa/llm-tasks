@@ -42,3 +42,4 @@ This would be difficult or impossible with consumer chat:
 - `notes/knowledge-work-patterns.md` - What makes local agents effective for deep inquiry
 - `notes/opencode-usage.md` - Observations from using opencode for this research (meta-experiment)
 - `notes/workflow-patterns.md` - Essential patterns: mode switching, rewinding, context hygiene
+- `notes/opencode-compaction.md` - How opencode manages context window limits (two-tier: pruning + summarization)

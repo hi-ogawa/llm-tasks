@@ -22,7 +22,7 @@ Claude Code's integration feels more like **Claude on the web with tool access**
 - Works naturally for non-coding tasks
 - Example: Korean language learning project with 5,000+ vocabulary cards, etymology generation, Anki integration
 
-**Evidence**: The `/home/hiroshi/code/personal/misc/korean/` project uses Claude Code for:
+**Evidence**: The `~/code/personal/misc/korean/` project uses Claude Code for:
 - Generating Korean etymology (Hanja, Japanese cognates, compounds)
 - Creating example sentences
 - Processing Anki cards
@@ -92,7 +92,7 @@ Instead of fighting tool-level system prompts, build up **project-level guidance
 ```
 korean/prompts/
 ├── requirements-etymology.md    # 147 lines of etymology standards
-├── requirements-example.md      # Example sentence requirements  
+├── requirements-example.md      # Example sentence requirements
 ├── guide-script.md              # Script writing principles (270 lines)
 └── koreantopik2/
     ├── generate-examples.md     # Workflow-specific prompts

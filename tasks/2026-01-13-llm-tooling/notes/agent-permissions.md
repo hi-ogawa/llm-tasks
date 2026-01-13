@@ -180,15 +180,65 @@ When prompted, you can choose:
 - `doom_loop` and `external_directory` default to `"ask"`
 - `.env` files denied by default
 
-### No Notification Hooks (Yet)
+### Notification System - In Progress!
 
-OpenCode **does not appear to have a notification hook system** like Claude Code. When blocked, the user must be watching the terminal.
+OpenCode has a **plugin hook system** but lacks built-in notification hooks like Claude Code. However, there's active development:
 
-**Workaround strategies:**
-1. Use more permissive default permissions
-2. Pre-configure known-safe patterns with `"allow"`
-3. Use `"always"` approval during session to reduce interruptions
-4. Create custom agents with broader permissions for autonomous tasks
+**Existing Plugin Hooks** (`packages/plugin/src/index.ts`):
+- `event` - Subscribe to all bus events (including `session.idle`)
+- `permission.ask` - Intercept permission requests
+- `tool.execute.before` / `tool.execute.after` - Tool lifecycle
+- `chat.message`, `chat.params` - Message handling
+- `experimental.text.complete` - Text completion events
+
+**The `session.idle` event exists!** (in `session/status.ts`)
+- Fires when session transitions to idle state
+- Plugins can subscribe via the `event` hook
+
+**Active Issues & PRs:**
+
+1. **Issue #5515** - "[FEATURE]: Finish hook, when LLM is ready for new instructions"
+   - Requests notification when task completes (exactly what we want)
+   - Assigned to core team
+
+2. **Issue #213** - "[feature request] notifications"
+   - Early feature request referencing Claude Code's notifications
+
+3. **PR #7672** - "feat: add notify hook system with input_required and timeout support"
+   - Adds `input_required` hook type for notifications
+   - Closes #5515
+   - Status: Open, under review
+
+4. **PR #6755** - "feat(cli): emit OSC 9 notifications for responses"
+   - Terminal-level notifications (works with terminal emulators)
+   - Aligns with Codex/Claude Code behavior
+
+5. **Ecosystem Plugins** (community-built):
+   - **opencode-message-notify** (PR #7785) - iOS notifications via Bark app
+   - **opencode-ntfy** (PR #7865) - Cross-platform notifications via ntfy.sh
+
+**Current Workaround:**
+Create a plugin that subscribes to `session.idle` events:
+
+```typescript
+import type { Plugin } from "@opencode-ai/plugin"
+
+const notifyPlugin: Plugin = async (input) => ({
+  event: async ({ event }) => {
+    if (event.type === "session.idle") {
+      // Send notification (desktop, Slack, etc.)
+      await fetch("https://ntfy.sh/your-topic", {
+        method: "POST",
+        body: "OpenCode task completed!"
+      })
+    }
+  }
+})
+
+export default notifyPlugin
+```
+
+**Bottom line:** OpenCode is close to having full notification support. The `session.idle` event already exists - it just needs better exposure via hooks or built-in notification support.
 
 ---
 
@@ -309,7 +359,7 @@ Gemini CLI **does not have notification hooks**. For autonomous work:
 | Feature | Claude Code | OpenCode | Codex CLI | Gemini CLI |
 |---------|-------------|----------|-----------|------------|
 | **Permission Granularity** | High (pattern matching) | High (glob patterns) | Medium (modes) | Low (trust-based) |
-| **Notification Hooks** | Yes (blocked + task complete) | No | No | No |
+| **Notification Hooks** | Yes (blocked + task complete) | Partial (via plugin) | No | No |
 | **Sandboxing** | Optional | No | Built-in | Optional |
 | **Full Auto Mode** | `bypassPermissions` | `"allow"` all | `--yolo` | Trust + sandbox |
 | **Per-Pattern Rules** | Yes (prefix match) | Yes (glob) | No | No |
@@ -328,8 +378,9 @@ Gemini CLI **does not have notification hooks**. For autonomous work:
 ### OpenCode
 1. Configure generous `allow` patterns for common operations
 2. Use `always` approval liberally during sessions
-3. Create purpose-specific agents with broader permissions
-4. Accept that you may need to stay near the terminal
+3. **Use plugin system** to subscribe to `session.idle` events for notifications
+4. Watch PR #7672 for native notification hook support
+5. Try community plugins: `opencode-message-notify`, `opencode-ntfy`
 
 ### Codex CLI
 1. Use `--full-auto` for normal development
@@ -345,14 +396,13 @@ Gemini CLI **does not have notification hooks**. For autonomous work:
 
 ## Key Insight
 
-**Claude Code is the only agent with notification hooks** - enabling two critical workflows:
-
+**Claude Code has the most mature notification system** with dedicated hooks for:
 1. **Blocked alerts** (`permission_prompt`) - Know when agent needs approval
 2. **Task complete alerts** (`idle_prompt`) - Know when agent finished and is ready for next task
 
-This enables a true "fire and forget" workflow: start a task, get notified when it's done or blocked, without watching the terminal.
+**OpenCode is catching up** - the `session.idle` event exists and can be used via plugins. PR #7672 adds native `input_required` notification hooks. Community plugins already provide iOS and ntfy.sh integrations.
 
-For other agents, the workaround is:
+For Codex CLI and Gemini CLI, you still need:
 - More permissive defaults (higher risk)
 - Sandboxing (reduced capability)
 - Being present during execution

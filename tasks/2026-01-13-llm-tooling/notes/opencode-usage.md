@@ -17,7 +17,7 @@ Opencode uses **agents** as its primary customization mechanism. What we called 
 1. **Primary agents** - Main assistants you interact with directly
    - Switch between them with **Tab** key
    - Have full conversation context
-   
+
 2. **Subagents** - Specialized assistants invoked for specific tasks
    - Called via `@mention` or automatically by primary agents
    - Run as child sessions
@@ -40,7 +40,7 @@ Opencode uses **agents** as its primary customization mechanism. What we called 
 
 ## System Prompt Architecture (From Source)
 
-Explored `/home/hiroshi/code/others/opencode` source code.
+Explored `~/code/others/opencode` source code.
 
 ### Prompt Files Location
 
@@ -69,7 +69,7 @@ The `plan.txt` file shows the actual Plan mode prompt:
 CRITICAL: Plan mode ACTIVE - you are in READ-ONLY phase. STRICTLY FORBIDDEN:
 ANY file edits, modifications, or system changes...
 
-Your current responsibility is to think, read, search, and delegate explore 
+Your current responsibility is to think, read, search, and delegate explore
 agents to construct a well-formed plan...
 ```
 
@@ -371,8 +371,9 @@ This is exactly the explore → capture pattern we identified for knowledge work
 ### Local Source as Documentation
 
 Instead of fetching docs from the web, we read the opencode source directly:
-- `/home/hiroshi/code/others/opencode/.opencode/agent/` - Real-world agent examples
-- `/home/hiroshi/code/others/opencode/packages/opencode/src/session/prompt/` - Actual prompts
+- `~/code/others/opencode/.opencode/agent/` - Real-world agent examples
+- `~/code/others/opencode/packages/opencode/src/session/prompt/` - Actual prompts
+- `~/code/others/opencode/packages/web/src/content/docs/` - Website documentation source
 
 This is more authoritative than web docs and demonstrates a key agent capability: direct filesystem access to arbitrary local resources.
 

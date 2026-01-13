@@ -1,7 +1,7 @@
 # toy-midi
 
 > **Status**: Planning complete. Project moved to dedicated repo:
-> https://github.com/hi-ogawa/toy-midi (local: `/home/hiroshi/code/personal/toy-midi`)
+> https://github.com/hi-ogawa/toy-midi (local: `~/code/personal/toy-midi`)
 
 A minimal web-based MIDI piano roll for manual bass line transcription, designed to play alongside a backing track.
 
