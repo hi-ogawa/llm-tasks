@@ -2,7 +2,7 @@
 
 ## Bugs
 - [ ] "tool result" appears out of place (out of card?)
-- [ ] Path decoding: hyphens in actual paths decoded as slashes (`llm-tasks` → `llm/tasks`)
+- [x] Path decoding: hyphens in actual paths decoded as slashes (`llm-tasks` → `llm/tasks`)
 
 ## UI Improvements
 - [ ] Instead of toggling with "details", show truncated thinking/tools + "show more" toggle
