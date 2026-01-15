@@ -12,6 +12,62 @@ CLAUDE_DIR = Path.home() / ".claude"
 PROJECTS_DIR = CLAUDE_DIR / "projects"
 
 
+def decode_project_path(encoded: str) -> str:
+    """Decode an encoded project path back to the original filesystem path.
+
+    Claude encodes paths like /home/user/my-project as -home-user-my-project.
+    We can't naively replace all hyphens with slashes because hyphens may be
+    part of actual directory names. Instead, we try all possible interpretations
+    and pick the one that matches the most path components on the filesystem.
+    """
+    if not encoded.startswith("-"):
+        return "/" + encoded.replace("-", "/")
+
+    # Remove leading hyphen
+    encoded = encoded[1:]
+    parts = encoded.split("-")
+
+    def find_best_path(idx: int, current_path: Path) -> tuple[int, int, list[str]]:
+        """Recursively find the best path interpretation.
+
+        Returns (validated_count, total_count, path_parts) where:
+        - validated_count: number of components that exist as directories
+        - total_count: total number of path components
+        Lower total_count is better when validated_count is equal (prefer fewer unvalidated parts).
+        """
+        if idx >= len(parts):
+            return (0, 0, [])
+
+        best = None  # (validated, total, parts)
+
+        # Try joining parts[idx:end+1] as a single path component
+        component = ""
+        for end in range(idx, len(parts)):
+            if component:
+                component = component + "-" + parts[end]
+            else:
+                component = parts[end]
+
+            test_path = current_path / component
+            is_valid = test_path.is_dir()
+
+            # Recurse to find remaining path
+            sub_validated, sub_total, sub_parts = find_best_path(end + 1, test_path if is_valid else current_path)
+
+            validated = (1 if is_valid else 0) + sub_validated
+            total = 1 + sub_total
+            result = (validated, total, [component] + sub_parts)
+
+            # Prefer: more validated, then fewer total parts
+            if best is None or (validated, -total) > (best[0], -best[1]):
+                best = result
+
+        return best if best else (0, 0, [])
+
+    _, _, path_parts = find_best_path(0, Path("/"))
+    return "/" + "/".join(path_parts)
+
+
 def get_projects():
     """Get all projects with session counts."""
     projects = []
@@ -23,7 +79,7 @@ def get_projects():
                 latest = max(s.stat().st_mtime for s in sessions)
                 projects.append({
                     "encoded": project_dir.name,
-                    "path": "/" + project_dir.name.replace("-", "/"),
+                    "path": decode_project_path(project_dir.name),
                     "session_count": len(sessions),
                     "latest": datetime.fromtimestamp(latest),
                 })
@@ -173,7 +229,7 @@ def index():
 def project(encoded):
     """List sessions for a project."""
     sessions = get_sessions(encoded)
-    decoded_path = "/" + encoded.replace("-", "/")
+    decoded_path = decode_project_path(encoded)
     return render_template("sessions.html", sessions=sessions, project_path=decoded_path, project_encoded=encoded)
 
 
