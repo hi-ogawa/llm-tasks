@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project_path }} - Claude History{% endblock %}
+
+{% block content %}
+<h1>{{ project_path }}</h1>
+<ul class="item-list">
+  {% for session in sessions %}
+  <li>
+    <a href="{{ url_for('session', session_id=session.id) }}">
+      <div class="item-meta">
+        {{ session.date.strftime('%Y-%m-%d %H:%M') }} · {{ session.size_kb }}KB
+      </div>
+      <div class="item-preview">{{ session.preview or '(empty)' }}</div>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

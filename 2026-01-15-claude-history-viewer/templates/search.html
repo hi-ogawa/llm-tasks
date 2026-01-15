@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Search - Claude History{% endblock %}
+
+{% block content %}
+<h1>Search{% if query %}: "{{ query }}"{% endif %}</h1>
+
+{% if results %}
+<ul class="item-list">
+  {% for result in results %}
+  <li class="search-result">
+    <a href="{{ url_for('session', session_id=result.session_id) }}">
+      <div class="search-date">{{ result.timestamp.strftime('%Y-%m-%d %H:%M') }}</div>
+      <div>{{ result.display }}</div>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% elif query %}
+<p>No results found for "{{ query }}"</p>
+{% else %}
+<p>Enter a search term above.</p>
+{% endif %}
+{% endblock %}
