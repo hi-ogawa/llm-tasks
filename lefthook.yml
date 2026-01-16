@@ -1,0 +1,6 @@
+pre-commit:
+  commands:
+    format-md:
+      glob: "*.md"
+      run: oxfmt --write {staged_files}
+      stage_fixed: true

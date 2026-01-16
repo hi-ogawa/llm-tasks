@@ -12,3 +12,9 @@ YYYY-MM-DD-topic/
 ```
 
 See [AGENTS.md](AGENTS.md) for workflow conventions.
+
+## Setup
+
+```bash
+lefthook install  # markdown formatting on commit (requires oxfmt)
+```

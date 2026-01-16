@@ -82,11 +82,36 @@ Examples:
 
 Natural language alternatives work too ("let's commit", "save this note", etc.).
 
+## Research Tasks
+
+For research/exploration tasks, structure files as follows:
+
+### README.md
+
+- Terse background context (your situation)
+- Goal of the research
+- List of files with one-line descriptions
+
+### plan.md
+
+- Checklist of questions to answer
+- Action items (things to do IRL)
+- Progress log with dates
+- Quick reference for key concepts
+
+### notes/
+
+- Detailed research findings
+- Tables for quick comparison
+- Always include `## Sources` with links for verifiable info
+- Side notes for tangential topics (e.g., `notes/side-topic.md`)
+
 ## Principles
 
 - **Files are the source of truth** - conversation is ephemeral, outputs persist
 - **User controls what to save** - agent writes what user instructs
 - **Commands and natural language** - both work, user's choice
+- **Sources matter** - include links for verifiable/fact-checked information
 
 ## Tooling
 
