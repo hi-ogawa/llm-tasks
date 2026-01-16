@@ -24,14 +24,15 @@ Opencode uses **agents** as its primary customization mechanism. What we called 
 
 ### Built-in Agents
 
-| Agent | Type | Purpose |
-|-------|------|---------|
-| **Build** | Primary | Full development with all tools enabled |
-| **Plan** | Primary | Read-only analysis and planning (file edits and bash set to "ask") |
-| **General** | Subagent | Multi-step research and complex tasks |
-| **Explore** | Subagent | Fast codebase exploration |
+| Agent       | Type     | Purpose                                                            |
+| ----------- | -------- | ------------------------------------------------------------------ |
+| **Build**   | Primary  | Full development with all tools enabled                            |
+| **Plan**    | Primary  | Read-only analysis and planning (file edits and bash set to "ask") |
+| **General** | Subagent | Multi-step research and complex tasks                              |
+| **Explore** | Subagent | Fast codebase exploration                                          |
 
 ### Observed Workflow
+
 1. Started in **Plan** agent - explored task files, discussed direction
 2. When ready to capture findings, switched to **Build** agent
 3. Agent then wrote/updated documentation files
@@ -46,14 +47,14 @@ Explored `~/code/others/opencode` source code.
 
 `packages/opencode/src/session/prompt/`:
 
-| File | Purpose |
-|------|---------|
-| `anthropic.txt` | Base system prompt for Anthropic models |
-| `plan.txt` | Plan mode reminder (injected as `<system-reminder>`) |
-| `plan-reminder-anthropic.txt` | Extended plan mode with phases and plan file |
-| `build-switch.txt` | Injected when switching from Plan to Build |
-| `codex.txt` | System prompt for Codex models |
-| `gemini.txt`, `qwen.txt` | Model-specific prompts |
+| File                          | Purpose                                              |
+| ----------------------------- | ---------------------------------------------------- |
+| `anthropic.txt`               | Base system prompt for Anthropic models              |
+| `plan.txt`                    | Plan mode reminder (injected as `<system-reminder>`) |
+| `plan-reminder-anthropic.txt` | Extended plan mode with phases and plan file         |
+| `build-switch.txt`            | Injected when switching from Plan to Build           |
+| `codex.txt`                   | System prompt for Codex models                       |
+| `gemini.txt`, `qwen.txt`      | Model-specific prompts                               |
 
 ### How Agents Work
 
@@ -74,6 +75,7 @@ agents to construct a well-formed plan...
 ```
 
 The `plan-reminder-anthropic.txt` is more sophisticated with phases:
+
 1. Initial Understanding (parallel Explore agents)
 2. Planning (Plan subagent)
 3. Synthesis (ask user questions)
@@ -103,6 +105,7 @@ Rules: [{"permission":"edit","pattern":"*","action":"deny"},
 ```
 
 This shows:
+
 - Plan mode denies `edit` for all files (`*`)
 - Exception: `.opencode/plan/*.md` files can still be edited
 - Matches behavior described in `plan-reminder-anthropic.txt`
@@ -112,11 +115,13 @@ This shows:
 Located in `.opencode/agent/`:
 
 **docs.md** - Primary agent for documentation:
+
 ```markdown
 ---
 description: ALWAYS use this when writing docs
 color: "#38A3EE"
 ---
+
 You are an expert technical documentation writer
 You are not verbose
 Use a relaxed and friendly tone
@@ -124,6 +129,7 @@ Use a relaxed and friendly tone
 ```
 
 **triage.md** - Hidden agent for GitHub issues:
+
 ```markdown
 ---
 mode: primary
@@ -133,11 +139,13 @@ tools:
   "*": false
   "github-triage": true
 ---
+
 You are a triage agent responsible for triaging github issues.
 ...
 ```
 
 **Key patterns:**
+
 - `hidden: true` - Agent exists but not shown in Tab cycling
 - `tools: {"*": false}` - Disable all tools, then enable specific ones
 - Custom MCP tools (`github-triage`, `github-pr-search`)
@@ -147,35 +155,42 @@ You are a triage agent responsible for triaging github issues.
 Located in `.opencode/command/`:
 
 **commit.md** - Commit workflow:
+
 ```markdown
 ---
 description: git commit and push
 model: opencode/glm-4.6
-subtask: true  # Runs as subagent to avoid polluting context
+subtask: true # Runs as subagent to avoid polluting context
 ---
+
 commit and push
 make sure it includes a prefix like docs: tui: core: ci:
 ...
 ```
 
 **rmslop.md** - Remove AI-generated code patterns:
+
 ```markdown
 ---
 description: Remove AI code slop
 ---
+
 Check the diff against dev, and remove all AI generated slop...
+
 - Extra comments that a human wouldn't add
 - Extra defensive checks or try/catch blocks
 - Casts to any to get around type issues
-...
+  ...
 ```
 
 **issues.md** - Search GitHub issues:
+
 ```markdown
 ---
 description: "find issue(s) on github"
 model: opencode/claude-haiku-4-5
 ---
+
 Search through existing issues using the gh cli to find issues matching:
 $ARGUMENTS
 ...
@@ -228,16 +243,16 @@ When making claims, cite sources. Be skeptical of unverified information.
 
 ### Agent Options
 
-| Option | Purpose |
-|--------|---------|
+| Option        | Purpose                                             |
+| ------------- | --------------------------------------------------- |
 | `description` | When to use this agent (shown in UI, used by model) |
-| `mode` | `primary`, `subagent`, or `all` |
-| `model` | Override the default model |
-| `tools` | Enable/disable specific tools |
-| `permission` | Fine-grained control (`ask`, `allow`, `deny`) |
-| `prompt` | Custom system prompt |
-| `temperature` | Control creativity (0.0-1.0) |
-| `maxSteps` | Limit agentic iterations |
+| `mode`        | `primary`, `subagent`, or `all`                     |
+| `model`       | Override the default model                          |
+| `tools`       | Enable/disable specific tools                       |
+| `permission`  | Fine-grained control (`ask`, `allow`, `deny`)       |
+| `prompt`      | Custom system prompt                                |
+| `temperature` | Control creativity (0.0-1.0)                        |
+| `maxSteps`    | Limit agentic iterations                            |
 
 ## Custom Commands
 
@@ -246,6 +261,7 @@ Commands are prompt templates triggered by `/command`:
 ### Example: Research Command
 
 `.opencode/command/research.md`:
+
 ```markdown
 ---
 description: Research a topic with source verification
@@ -255,6 +271,7 @@ agent: plan
 Research the following topic: $ARGUMENTS
 
 Focus on:
+
 1. Finding authoritative sources
 2. Verifying claims against documentation
 3. Noting any uncertainties or conflicts
@@ -263,6 +280,7 @@ Structure findings as markdown notes.
 ```
 
 Usage:
+
 ```
 /research reverb parameters in audio production
 ```
@@ -296,6 +314,7 @@ permission:
 You are a research assistant. Your job is to gather information and verify claims.
 
 Guidelines:
+
 - Always cite sources when making factual claims
 - Use webfetch to verify information against official documentation
 - Be explicit about uncertainty
@@ -316,6 +335,7 @@ tools:
 
 Verify the following claims against authoritative sources.
 For each claim, indicate:
+
 - VERIFIED: Found in official documentation
 - UNVERIFIED: Could not find authoritative source
 - CONTRADICTED: Official docs say something different
@@ -371,6 +391,7 @@ This is exactly the explore → capture pattern we identified for knowledge work
 ### Local Source as Documentation
 
 Instead of fetching docs from the web, we read the opencode source directly:
+
 - `~/code/others/opencode/.opencode/agent/` - Real-world agent examples
 - `~/code/others/opencode/packages/opencode/src/session/prompt/` - Actual prompts
 - `~/code/others/opencode/packages/web/src/content/docs/` - Website documentation source
@@ -380,6 +401,7 @@ This is more authoritative than web docs and demonstrates a key agent capability
 ### The `/rmslop` Command
 
 The opencode team has a command to "remove AI code slop" - patterns like:
+
 - Extra comments a human wouldn't add
 - Unnecessary defensive checks
 - Type casts to `any`

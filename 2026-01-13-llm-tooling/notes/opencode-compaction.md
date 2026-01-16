@@ -5,6 +5,7 @@ How opencode manages context window limits during long conversations.
 ## Overview
 
 Compaction is a two-tier system:
+
 1. **Pruning** - Clears old tool outputs (fast, frequent)
 2. **Summarization** - LLM-generated conversation summary (heavy, when overflow detected)
 
@@ -14,9 +15,9 @@ After each assistant message completes, opencode checks for overflow:
 
 ```typescript
 // compaction.ts:30-39
-const count = input.tokens.input + input.tokens.cache.read + input.tokens.output
-const usable = context - max_output_tokens
-return count > usable
+const count = input.tokens.input + input.tokens.cache.read + input.tokens.output;
+const usable = context - max_output_tokens;
+return count > usable;
 ```
 
 Key insight: It reserves space for the **next** response before triggering compaction.
@@ -37,10 +38,12 @@ The user perceives this as mid-interaction because the assistant continues seaml
 ### Stage 1: Pruning (Token Cleanup)
 
 **Constants:**
+
 - `PRUNE_PROTECT = 40,000` tokens - Keep recent tool outputs
 - `PRUNE_MINIMUM = 20,000` tokens - Minimum savings to bother pruning
 
 **Strategy:**
+
 - Walks backward through history
 - Clears tool call outputs beyond protection threshold
 - Replaces with: `"[Old tool result content cleared]"`
@@ -52,6 +55,7 @@ The user perceives this as mid-interaction because the assistant continues seaml
 When pruning isn't enough, creates a compaction message:
 
 **Prompt** (`agent/prompt/compaction.txt`):
+
 ```
 You are a helpful AI assistant tasked with summarizing conversations.
 
@@ -65,6 +69,7 @@ Focus on information that would be helpful for continuing the conversation, incl
 ```
 
 **Result:**
+
 - Creates message with `mode: "compaction"`, `summary: true`
 - Emits `Event.Compacted` for UI notification
 - Auto-generates "continue" message if `auto: true`
@@ -72,6 +77,7 @@ Focus on information that would be helpful for continuing the conversation, incl
 ## What Gets Preserved vs. Compressed
 
 **Preserved:**
+
 - All user messages (text)
 - Recent assistant responses
 - Recent tool calls + inputs
@@ -79,6 +85,7 @@ Focus on information that would be helpful for continuing the conversation, incl
 - Message metadata/structure
 
 **Compressed/Cleared:**
+
 - Old tool outputs beyond threshold
 - Entire conversation → single summary message
 
@@ -88,8 +95,8 @@ Focus on information that would be helpful for continuing the conversation, incl
 // opencode.json
 {
   "compaction": {
-    "auto": true,    // Enable automatic compaction
-    "prune": true    // Enable tool output pruning
+    "auto": true, // Enable automatic compaction
+    "prune": true // Enable tool output pruning
   }
 }
 ```
@@ -104,11 +111,13 @@ Focus on information that would be helpful for continuing the conversation, incl
 ## Implications for Knowledge Work
 
 This mechanism allows "unlimited" conversation length, but with tradeoffs:
+
 - Early context gets summarized (lossy compression)
 - Tool outputs from early exploration are lost
 - Summary quality depends on LLM's ability to extract key points
 
 For deep inquiry workflows, this means:
+
 - Important findings should be persisted to files (not just conversation)
 - Can't rely on conversation memory for detailed historical context
 - Explicit checkpointing (writing notes/docs) is essential

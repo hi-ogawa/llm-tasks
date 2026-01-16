@@ -16,6 +16,7 @@ Exploring the current landscape of audio plugin development for hobbyist/indie u
 ## LLM-Friendly Workflow
 
 Identified approaches for LLM collaboration in audio dev:
+
 - Offline audio processing (no DAW reload cycle)
 - Numerical DSP testing (assertions, not listening)
 - FunDSP for DSP-as-code prototyping

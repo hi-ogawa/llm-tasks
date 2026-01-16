@@ -9,6 +9,7 @@
 ## Goal
 
 Create a **single text file** (markdown) containing all OBS knowledge base documentation to:
+
 - Provide as custom instructions/context to Gemini chat projects
 - Enable accurate OBS Q&A without hallucinations
 - Use with any LLM that supports large context windows
@@ -18,17 +19,20 @@ Create a **single text file** (markdown) containing all OBS knowledge base docum
 ## Approach
 
 ### Phase 1: Estimation
+
 - Explore OBS KB structure (https://obsproject.com/kb)
 - Count total pages/articles
 - Identify article categories and organization
 - Estimate total content size
 
 ### Phase 2: Scraping and Conversion
+
 - Scrape official OBS knowledge base
 - Convert HTML to markdown format
 - Preserve structure and metadata
 
 ### Phase 3: Validation
+
 - Test LLM retrieval accuracy with real questions
 - Verify: Can LLM answer accurately without hallucinating?
 - Document coverage and limitations
@@ -61,6 +65,7 @@ tasks/2026-01-06-obs-document/
 ## Implementation Plan
 
 ### Step 1: Exploration
+
 - [x] Manual exploration of KB structure (see `estimation.md`)
 - [x] Identified 10 categories, URL patterns, pagination structure
 
@@ -109,6 +114,7 @@ uv run scripts/concatenate-kb.py
   - **Articles**: 100
 
 ### Step 4: Testing
+
 - [ ] Test with real OBS questions
 - [ ] Verify accuracy vs. hallucinations
 - [ ] Document limitations
@@ -118,6 +124,7 @@ uv run scripts/concatenate-kb.py
 **See**: `estimation.md` for detailed analysis
 
 ### Quick Summary
+
 - **Categories**: 10 (F.A.Q.s, Getting Started, Troubleshooting, OBS Studio, Streaming, Recording, Sources & Filters, Audio, Scripting, Post-Production)
 - **Estimated articles**: 100-150 total
 - **Estimated size**: 40,000-90,000 words (~0.3-0.6 MB)
@@ -126,6 +133,7 @@ uv run scripts/concatenate-kb.py
 - **Sample article**: ~450-500 words with screenshots
 
 ### URL Patterns
+
 ```
 Categories:  https://obsproject.com/kb/category/{0-9}?page={N}
 Articles:    https://obsproject.com/kb/{article-slug}
@@ -134,6 +142,7 @@ Articles:    https://obsproject.com/kb/{article-slug}
 ## Reference
 
 Inspired by: `C:\Users\hiroshi\code\personal\misc\llm\ableton\README.md`
+
 - Similar methodology: scrape official docs → markdown → LLM context
 - Proven approach for avoiding hallucinations
 
@@ -149,5 +158,6 @@ Chapters:       42
 ```
 
 **Expectation**: OBS KB documentation may be similar or smaller in scope.
+
 - Estimate during Phase 1 to compare
 - Use as baseline for LLM context size

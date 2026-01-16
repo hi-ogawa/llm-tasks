@@ -7,6 +7,7 @@ Analysis of what makes local agents (Claude Code, opencode) effective for deep i
 **Task**: Learn Ableton Live as a Linux user with specific context (bass player, active electronics, existing Ardour knowledge).
 
 **What the agent did:**
+
 1. Answered questions with personal context considered
 2. Verified shortcuts against official Ableton documentation
 3. Caught and corrected hallucinations (marked with verification status)
@@ -20,6 +21,7 @@ Analysis of what makes local agents (Claude Code, opencode) effective for deep i
 ### 1. File System as Memory
 
 **What it enables:**
+
 - Documents persist across sessions
 - Can reference and build on previous work
 - Context accumulates in files, not just conversation window
@@ -30,11 +32,13 @@ Analysis of what makes local agents (Claude Code, opencode) effective for deep i
 ### 2. Web Fetching for Verification
 
 **What it enables:**
+
 - Cross-reference claims against official documentation
 - Catch hallucinations before they become "knowledge"
 - Build verified reference material
 
 **Example from Ableton task:**
+
 - LLM claimed `A` key was "select mode" in MIDI editor
 - Verification against official docs showed this was wrong
 - Corrected and marked in document
@@ -44,6 +48,7 @@ Analysis of what makes local agents (Claude Code, opencode) effective for deep i
 ### 3. Iterative Document Editing
 
 **What it enables:**
+
 - Refine documents based on new information
 - Add verification status markers
 - Restructure and expand over time
@@ -54,6 +59,7 @@ Analysis of what makes local agents (Claude Code, opencode) effective for deep i
 ### 4. Tool Execution
 
 **What it enables:**
+
 - Run conversion scripts (e.g., HTML to Markdown for documentation)
 - Execute validation/testing
 - Automate repetitive parts of research workflow
@@ -63,6 +69,7 @@ Analysis of what makes local agents (Claude Code, opencode) effective for deep i
 ### 5. Large Context via Filesystem
 
 **What it enables:**
+
 - Reference large documents without hitting context limits
 - Read specific sections on demand
 - Agent decides what context is relevant
@@ -97,6 +104,7 @@ To match this workflow, consumer chat would need:
 4. **File export/import** - Seamless movement between chat and filesystem
 
 **Current state:**
+
 - Claude Projects: Has file upload and project context, but no web access, limited artifact iteration
 - Claude Desktop + MCP: Potentially bridges the gap? (needs investigation)
 - ChatGPT: Similar limitations

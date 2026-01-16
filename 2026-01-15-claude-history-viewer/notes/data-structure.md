@@ -14,13 +14,13 @@
 
 Each line is one JSON object.
 
-| type | description |
-|------|-------------|
-| `user` | User message or tool results |
-| `assistant` | Assistant response |
-| `summary` | Conversation summary (for resume) |
-| `system` | Metadata (turn_duration, etc.) |
-| `file-history-snapshot` | File backup snapshots |
+| type                    | description                       |
+| ----------------------- | --------------------------------- |
+| `user`                  | User message or tool results      |
+| `assistant`             | Assistant response                |
+| `summary`               | Conversation summary (for resume) |
+| `system`                | Metadata (turn_duration, etc.)    |
+| `file-history-snapshot` | File backup snapshots             |
 
 ## User Message Structure
 
@@ -29,7 +29,7 @@ Each line is one JSON object.
   "type": "user",
   "message": {
     "role": "user",
-    "content": "plain text string"   // OR array of tool_result objects
+    "content": "plain text string" // OR array of tool_result objects
   },
   "uuid": "...",
   "parentUuid": "...",
@@ -40,6 +40,7 @@ Each line is one JSON object.
 ```
 
 When `content` is array (tool results):
+
 ```json
 {
   "content": [
@@ -69,6 +70,7 @@ When `content` is array (tool results):
 ```
 
 Content block types:
+
 - `thinking` - extended thinking (has `thinking` field)
 - `text` - visible response (has `text` field)
 - `tool_use` - tool invocation (has `name`, `input` fields)

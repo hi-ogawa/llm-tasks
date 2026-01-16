@@ -1,5 +1,6 @@
 # Bass Tone Guide: Clean Sound with Amp Sim + Reverb
-*For Yamaha TRB1005J (5-string active bass)*
+
+_For Yamaha TRB1005J (5-string active bass)_
 
 ## Your Setup Context
 
@@ -10,6 +11,7 @@
 - **Style**: Pop/funk, fingerstyle & slap, clean tone focus
 
 ### Key Setup Note: Latency
+
 Since you're monitoring through the DAW (not direct monitoring), **keep buffer size as low as possible** without crackling (64-128 samples) for comfortable playing feel.
 
 ---
@@ -17,17 +19,21 @@ Since you're monitoring through the DAW (not direct monitoring), **keep buffer s
 ## High-Level Concept
 
 ### Signal Chain Philosophy
+
 ```
 Bass (Active EQ) → Compressor → Amp Sim → Reverb
 ```
 
 The goal is **clarity and consistency** with subtle space. Each effect serves a purpose:
+
 - **Compressor**: Evens out dynamics, sustains notes
 - **Amp Sim**: Provides warmth and character (clean setting)
 - **Reverb**: Adds subtle room/space without muddiness
 
 ### Key Consideration: Active Bass Control
+
 Your TRB1005J has:
+
 - Active preamp (needs battery)
 - 3-band EQ onboard (Bass/Mid/Treble)
 - Pickup blend control
@@ -35,7 +41,9 @@ Your TRB1005J has:
 **Critical Rule**: With active electronics, start with bass EQ flat/neutral to avoid over-boosting and signal clipping. Shape tone with effects, not excessive onboard EQ.
 
 ### High-Level Principle (Works for Both Zoom B1 & DAW)
+
 The **same philosophy applies** whether using Zoom B1 Four or Ableton:
+
 1. **Start with clean bass signal** (flat EQ, good volume)
 2. **Compress for consistency** (optional but helpful for slap/finger dynamics)
 3. **Shape tone with amp sim** (warmth + character)
@@ -49,6 +57,7 @@ The **same philosophy applies** whether using Zoom B1 Four or Ableton:
 ## Step 1: Bass Setup (TRB1005J)
 
 ### Starting Point Settings
+
 1. **Volume**: 80-90% (leave headroom for dynamics)
 2. **Pickup Blend**: Start at 50/50 (neck+bridge balanced)
    - More neck (counter-clockwise) = warmer, fuller, rounder
@@ -62,15 +71,17 @@ The **same philosophy applies** whether using Zoom B1 Four or Ableton:
 **Note**: Yamaha doesn't publish exact frequency centers, but based on typical TRB design:
 
 #### Bass Control
+
 - **Frequency**: ~80-100 Hz (low bass fundamental)
 - **Range**: Approximately ±12-15 dB boost/cut
 - **Character**: Controls low-end weight and "thump"
-- **Practical tip**: 
+- **Practical tip**:
   - Boost = fuller, fatter, more sub-bass
   - Cut = tighter, less boomy (good if room/amp is bass-heavy)
   - **Warning**: Active boost here can easily overload input → use sparingly!
 
 #### Middle Control
+
 - **Frequency**: ~400-800 Hz (low-mids, body range)
 - **Range**: Approximately ±12-15 dB boost/cut
 - **Character**: Controls "thickness" and presence
@@ -80,6 +91,7 @@ The **same philosophy applies** whether using Zoom B1 Four or Ableton:
   - This is where fingerstyle "growl" lives
 
 #### Treble Control
+
 - **Frequency**: ~4-8 kHz (upper treble, harmonics)
 - **Range**: Approximately ±12-15 dB boost/cut
 - **Character**: Controls brightness, string noise, slap "pop"
@@ -93,24 +105,28 @@ The **same philosophy applies** whether using Zoom B1 Four or Ableton:
 The TRB1005J has **two humbucking pickups** with a blend control:
 
 #### Neck Pickup (Full counter-clockwise)
+
 - Warmer, fuller tone
 - More low-mids and fundamental
 - Smoother high-end
 - **Best for**: Fingerstyle, R&B, smooth basslines
 
 #### Bridge Pickup (Full clockwise)
+
 - Brighter, more articulate
 - Enhanced treble and attack
 - Tighter low-end
 - **Best for**: Slap, funk, cutting through mix
 
 #### Both Pickups (Center position)
+
 - Balanced tone
 - Most versatile
 - Slight "scoop" in mids (common with both pickups on)
 - **Best for**: General playing, starting point
 
 ### Why This Matters
+
 - Active basses output **hot signals** (louder than passive)
 - Active EQ has **powerful boost/cut** (±12-15dB is huge!)
 - Too much bass boost at source = muddy, clippy tone
@@ -119,18 +135,21 @@ The TRB1005J has **two humbucking pickups** with a blend control:
 ### Philosophy: Where to Shape Tone?
 
 **Option 1: Shape at Bass (Your Onboard EQ)**
+
 - ✅ More responsive to your playing dynamics
 - ✅ Can change tone quickly while playing
 - ❌ Risk of clipping input if boosted too much
 - ❌ Less precise control (pot taper)
 
 **Option 2: Shape at Amp Sim (Bass Amp Device)**
+
 - ✅ More precise control over frequencies
 - ✅ No clipping risk from hot input
 - ✅ Save presets for different tones
 - ❌ Can't adjust while playing (need to edit plugin)
 
-**Recommended Approach**: 
+**Recommended Approach**:
+
 - **Bass EQ = flat** (neutral starting point)
 - **Shape tone with Bass Amp device** (more control)
 - **Use onboard EQ for fine-tuning** or playing style changes (boost treble for slap section, etc.)
@@ -140,11 +159,13 @@ The TRB1005J has **two humbucking pickups** with a blend control:
 ## Step 2: Compressor (Optional but Recommended)
 
 ### Purpose
+
 - Smooths volume differences between soft/hard playing
 - Increases sustain without changing tone
 - Helps bass sit consistently in mix
 
 ### Recommended Settings (Starting Point)
+
 ```
 Ratio:       3:1 to 4:1
 Threshold:   Adjust so 3-6dB of gain reduction shows
@@ -155,6 +176,7 @@ Mix/Blend:   100% (or 70-80% for parallel compression)
 ```
 
 ### Common Ableton Compressor Settings
+
 - Use **Glue Compressor** (gentle, musical) OR **Compressor** device
 - Enable "Peak" mode for bass frequencies
 - Avoid over-compressing (sounds lifeless)
@@ -164,6 +186,7 @@ Mix/Blend:   100% (or 70-80% for parallel compression)
 ## Step 3: Ableton Bass Amp (Clean Tone)
 
 ### Best Models for Clean Pop/Funk
+
 Based on your screenshot, you have 5 models. **Recommended starting points**:
 
 1. **Crisp Bass** (Best for funk/slap)
@@ -188,6 +211,7 @@ Based on your screenshot, you have 5 models. **Recommended starting points**:
 ### Ableton Bass Amp: Exact Settings for Clean Pop/Funk
 
 #### Starting Point (Based on Your Image)
+
 ```
 Model:         Crisp Bass (or Middle Earth)
 Amp Gain:      3.5 - 4.5  (clean with slight warmth)
@@ -207,11 +231,13 @@ Gate:          0 (off, unless you have noise)
 ```
 
 #### For Slap Technique Specifically
+
 - **Treble**: Bump to 7.5-8.0 (slap pop clarity)
 - **Presence**: 5.5-6.5 (helps slap cut through)
 - **Middle**: Keep moderate (2.5-3.0) to avoid nasal tone
 
-#### For Fingerstyle Specifically  
+#### For Fingerstyle Specifically
+
 - **Treble**: 6.0-7.0 (smoother, less snap)
 - **Bass**: 7.5-8.5 (fuller low-end)
 - **Middle**: 2.0-2.5 (warm, not honky)
@@ -221,6 +247,7 @@ Gate:          0 (off, unless you have noise)
 ### Input Volume Critical Adjustment
 
 Your TRB1005J is **active** = hot signal. Watch the input meter:
+
 - **Green**: Good
 - **Yellow/Orange**: Getting hot but OK
 - **Red/Clipping**: REDUCE Input Volume or bass onboard volume
@@ -247,13 +274,15 @@ YOU PLAY → Sound travels to walls → Bounces back → Keeps bouncing & fading
 ### Reverb Parameters Explained Intuitively
 
 #### 1. **Predelay** - "How Far Are the Walls?"
+
 **Analogy**: Time between playing the note and hearing the first reflection
 
 - **0ms**: Walls are right next to you (tiny room, booth)
 - **10-30ms**: Normal room size (bedroom, studio)
 - **50-100ms**: Large hall or distant walls
 
-**For bass**: 
+**For bass**:
+
 - Use **0-5ms** for tight, intimate sound
 - Longer predelay = more separation between dry note and reverb
 - Too long = sounds disconnected, like delay
@@ -263,18 +292,22 @@ YOU PLAY → Sound travels to walls → Bounces back → Keeps bouncing & fading
 ---
 
 #### 2. **Early Reflections** - "First Bounces Off Walls"
+
 **Analogy**: The initial, distinct echoes you hear before they blur together
 
 When you clap in a room, you might hear:
-- CLAP → *tap* (back wall) → *tap tap* (side walls) → *tap* (ceiling)
+
+- CLAP → _tap_ (back wall) → _tap tap_ (side walls) → _tap_ (ceiling)
 
 These are **early reflections** - clear, separate bounces before they smear into reverb tail.
 
 **Parameters in Ableton**:
+
 - **Amount**: How loud are these first bounces? (volume of early reflections)
 - **Spin**: Makes reflections slightly wobbly/chorused (like walls are moving)
 
 **For bass**:
+
 - **Amount: 5-7** - Subtle room character without clutter
 - Too much = cluttered, boxy sound
 - Too little = only reverb tail (less realistic)
@@ -284,6 +317,7 @@ These are **early reflections** - clear, separate bounces before they smear into
 ---
 
 #### 3. **Decay Time** - "How Long Does Sound Linger?"
+
 **Analogy**: How fast sound dies out after you stop playing
 
 - **Short decay (0.5-1s)**: Dry room, lots of carpet/absorption (studio booth)
@@ -291,6 +325,7 @@ These are **early reflections** - clear, separate bounces before they smear into
 - **Long decay (3-5s+)**: Cathedral, empty warehouse (very reflective)
 
 **For bass**:
+
 - Use **800-1200ms (0.8-1.2s)** for clean tone
 - Longer = washy, muddy low-end
 - Your **851ms is perfect** for pop/funk
@@ -300,29 +335,35 @@ These are **early reflections** - clear, separate bounces before they smear into
 ---
 
 #### 4. **Diffusion** - "How Blurry Are the Reflections?"
+
 **Analogy**: Imagine hundreds of tiny bounces happening between walls
 
 In a **real room with complex surfaces** (bookshelves, furniture, uneven walls):
+
 - Sound bounces off MANY tiny surfaces
 - Reflections blur together into smooth wash
 - Creates dense, continuous reverb tail
 
 **High Diffusion**:
+
 - Smooth, even reverb tail (like a plate reverb)
 - No distinct echoes, just lush wash
 - Sounds more artificial but smoother
 
 **Low Diffusion**:
+
 - You can hear individual reflections bouncing around
 - More "grainy" or "echoey" character
 - Sounds more natural/realistic
 
 **Ableton Diffusion Network**:
+
 - **High Freq**: Controls diffusion in treble (brightness smear)
 - **Low Freq**: Controls diffusion in bass (low-end smear)
 - **Scale**: Overall diffusion amount (0.7-0.8 is balanced)
 
 **For bass**:
+
 - Keep **Low Freq diffusion around 120-180 Hz** (tight low-end)
 - Higher values = muddier bass
 - Your **152 Hz is good**
@@ -332,21 +373,25 @@ In a **real room with complex surfaces** (bookshelves, furniture, uneven walls):
 ---
 
 #### 5. **Input Filters (Lo Cut / Hi Cut)** - "What Frequencies Get Reverb?"
+
 **Analogy**: EQ before sound enters the reverb "room"
 
-This is **different from room character** - it's about what frequencies you *send* to reverb.
+This is **different from room character** - it's about what frequencies you _send_ to reverb.
 
 **Lo Cut (High-Pass Filter)**:
+
 - Removes low frequencies from reverb
 - **Critical for bass**: Prevents muddy, boomy reverb tail
 - Set to **120-180 Hz** = reverb only on mids/highs (tight low-end)
 
 **Hi Cut (Low-Pass Filter)**:
+
 - Removes high frequencies from reverb
 - Makes reverb darker, less "sparkly"
 - Set to **4.5-6 kHz** = smooth, not harsh
 
 **Why this matters for bass**:
+
 - Bass + low-frequency reverb = MUD
 - By cutting lows in reverb (120 Hz+), your fundamental notes stay dry/tight
 - Only upper harmonics get reverb = space without losing clarity
@@ -356,6 +401,7 @@ This is **different from room character** - it's about what frequencies you *sen
 ---
 
 #### 6. **Dry/Wet Mix** - "How Much Room Do You Hear?"
+
 **Analogy**: Balance between direct sound (close mic) and room sound (room mic)
 
 - **0% Wet**: No reverb, bone dry (like practicing with headphones)
@@ -363,6 +409,7 @@ This is **different from room character** - it's about what frequencies you *sen
 - **100% Wet**: Only reverb, no dry signal (like hearing from another room)
 
 **For bass**:
+
 - **12-18% wet** = subtle space, mostly dry (your 15% is ideal)
 - Too much = washy, loses punch
 - Bass needs clarity, so stay low!
@@ -384,30 +431,34 @@ Based on your screenshot (**Small Tile** preset):
 ⚠️  Hi Cut: 5.28 kHz     → OK, but could try 4.5-5 kHz
 ```
 
-**The Big Issue**: Lo Cut at 556 Hz means reverb only applies to frequencies *above* 556 Hz. This removes almost all the bass body from reverb, making it sound thin. Lower to **150 Hz** so reverb includes low-mids (gives body) but not sub-bass (avoids mud).
+**The Big Issue**: Lo Cut at 556 Hz means reverb only applies to frequencies _above_ 556 Hz. This removes almost all the bass body from reverb, making it sound thin. Lower to **150 Hz** so reverb includes low-mids (gives body) but not sub-bass (avoids mud).
 
 ---
 
 ### Recommended Reverb Settings for Clean Bass
 
 #### Algorithm Type
+
 ```
 Small Tile or Room - Both work well for bass
 ```
 
 #### Input Filter (CRITICAL for Bass)
+
 ```
 Lo Cut:  120-180 Hz  (NOT 556 Hz!)
 Hi Cut:  4.5-6 kHz    (removes harsh reflections)
 ```
 
 #### Early Reflections
+
 ```
 Spin:   0.15 - 0.20 (subtle modulation, not too wobbly)
 Amount: 5.0 - 7.0   (present but not dominant)
 ```
 
 #### Diffusion Network
+
 ```
 High:   850-950 Hz  (your 912 Hz is good)
 Low:    120-180 Hz  (your 152 Hz is OK)
@@ -415,6 +466,7 @@ Scale:  0.7 - 0.8   (your 0.75 is good)
 ```
 
 #### Decay & Output
+
 ```
 Decay:    800-1200ms (your 851ms is PERFECT)
 Predelay: 0-5ms      (very short for pop/funk)
@@ -450,6 +502,7 @@ INPUT FILTERS                              DRY/WET MIX
 ### Quick Fix for Your Current Reverb
 
 **Only change this**:
+
 1. **Lower Lo Cut filter**: From 556 Hz → **150 Hz**
    - In Ableton Reverb, look at "Input Processing" section
    - Drag the left edge of the filter curve down
@@ -464,9 +517,8 @@ Everything else in your screenshot looks **great for bass**!
 
 To really understand these parameters, try this:
 
-1. **Predelay Test**: 
+1. **Predelay Test**:
    - Set to 0ms → Play → Set to 100ms → Hear the gap?
-   
 2. **Decay Test**:
    - Set to 0.5s → Short, dry → Set to 3s → Long, washy
 
@@ -542,6 +594,7 @@ Start with the numbers above, then trust your ears!
 ### For Zoom B1 Four (Alternative/Practice)
 
 The **same principles apply** when building patches:
+
 1. Choose clean amp model (SVT, Flip Top, etc.)
 2. Keep gain low (clean headroom)
 3. EQ similar: Bass +2-3, Mid +2-3, Treble +1-2
@@ -556,36 +609,42 @@ The **same principles apply** when building patches:
 ## Troubleshooting Common Issues
 
 ### "Sounds Muddy/Boomy"
+
 - **First**: Check reverb Lo Cut - should be 120-180 Hz (NOT 556 Hz!)
 - Reduce Bass knob on Bass Amp (try 6.5-7.0)
 - Check if bass onboard EQ is boosted (should be flat)
 - Try "Crisp Bass" model instead of "Chubby Bass"
 
 ### "Too Bright/Harsh" (Especially on Slap)
+
 - Reduce Treble on Bass Amp (try 5.5-6.0)
 - Lower Presence (try 4.0-4.5)
 - Cut treble slightly on bass itself
 - Lower Hi Cut filter on reverb to 4.5 kHz
 
 ### "Slap Doesn't Pop/Cut Through"
+
 - **Increase Treble**: 7.5-8.5 on Bass Amp
 - **Increase Presence**: 6.0-7.0
 - Boost Middle slightly: 3.0-3.5
 - Make sure pickup blend has some bridge pickup (40-50%)
 
 ### "Fingerstyle Sounds Too Thin"
+
 - **Increase Bass**: 8.0-8.5 on Bass Amp
 - Blend more toward neck pickup (60-70% neck)
 - Reduce Treble to 6.0
 - Try "Middle Earth" or "Chubby Bass" model
 
 ### "Signal Clipping/Distorting"
+
 - **Lower "Input Volume"** in Bass Amp device (try 2.0-3.0 dB)
 - Reduce bass volume knob (active basses are HOT!)
 - Check Focusrite input gain (shouldn't be maxed out)
 - Lower Amp Gain to 3.0-3.5
 
 ### "Latency Too High / Feels Laggy"
+
 - **Lower buffer size**: Preferences → Audio → 64 or 128 samples
 - Freeze/flatten other tracks to reduce CPU load
 - Close unnecessary plugins
@@ -596,12 +655,14 @@ The **same principles apply** when building patches:
 ## Next Steps & Refinements
 
 ### Once Comfortable:
+
 1. **Experiment with pickup blend** (neck vs bridge character)
 2. **Try parallel compression** (blend 50% compressed + 50% dry)
 3. **Add EQ after amp sim** for final tone shaping
 4. **Explore different amp models** (character variations)
 
 ### Recording/Mixing Context:
+
 - **Track DI + processed** separately (flexibility later)
 - Consider **multiband compression** for advanced control
 - **High-pass filter** at 30-40Hz (removes sub-rumble)
@@ -611,6 +672,7 @@ The **same principles apply** when building patches:
 ## Quick Start Checklist
 
 ### Immediate Action Steps:
+
 1. ✅ **Fix your reverb Lo Cut**: Lower from 556 Hz → **150 Hz**
 2. ✅ **Set Bass Amp model**: Choose **"Crisp Bass"** or **"Middle Earth"**
 3. ✅ **Copy these Bass Amp settings**:
@@ -620,6 +682,7 @@ The **same principles apply** when building patches:
 6. ✅ **Bass EQ**: All flat (don't boost at source yet)
 
 ### Then Test:
+
 - Play fingerstyle → Should sound warm, clear, present
 - Play slap → Should pop without harshness
 - A/B bypass Bass Amp → Should add warmth/body without distortion
@@ -641,12 +704,14 @@ If you want even more specific help:
 ## Additional Resources
 
 ### Learning Path:
+
 - Practice **A/B testing**: Turn effects on/off to hear differences
 - **Save Bass Amp presets** when you find good settings (right-click device title)
 - **Trust your ears**: Numbers are starting points, adjust for your taste
 - **Switch techniques**: Different settings for fingerstyle vs slap is OK!
 
 ### Yamaha TRB1005J Specs:
+
 - Pickup: Dual coil humbucking x2
 - Preamp: Active 3-band EQ
 - String spacing: 16.5mm (slightly narrow)
@@ -654,6 +719,7 @@ If you want even more specific help:
 - **Perfect for**: Pop, funk, slap - naturally clear tone
 
 ### Why This Setup Works for Pop/Funk:
+
 - **Crisp Bass amp model**: Hi-fi clarity for modern pop/funk
 - **Active bass**: Consistent output, great for dynamic playing (slap/finger mix)
 - **Short reverb**: Space without washing out groove
@@ -664,6 +730,7 @@ If you want even more specific help:
 ## One More Thing: Your Reverb Is Already 90% There!
 
 Looking at your screenshot, your **Small Tile reverb is almost perfect**. The only critical fix:
+
 - **Lo Cut: 556 Hz → 150 Hz** (lets reverb have body on bass)
 
 That one change will make a huge difference! Everything else (decay 851ms, dry/wet 15%) is already ideal for bass.
@@ -682,6 +749,7 @@ This is **normal** - tone that sounds good solo ≠ tone that fits in a mix.
 ### Key Principle: Frequency Masking
 
 **Analogy**: Think of the audio spectrum like a highway with lanes:
+
 ```
 HIGH:   |Cymbals|Vocals|Guitar|        ← Lots of traffic here
 MID:    |Snare|Guitar|Keys|Bass|       ← VERY crowded
@@ -690,6 +758,7 @@ SUB:    |Bass fundamental|             ← You own this space
 ```
 
 When backtrack plays:
+
 - Other instruments "cover up" your bass in certain frequency ranges
 - You need to find your "space" in the mix
 - Solo tone = all frequencies. Mix tone = emphasize YOUR frequencies.
@@ -699,10 +768,12 @@ When backtrack plays:
 ### Tone Adjustments for Playing with Backtracks
 
 #### Problem 1: "Bass Disappears in the Mix"
+
 **Why**: Midrange frequencies are masked by guitar, keys, vocals
 
 **Solutions**:
-1. **Boost Mids on Bass Amp**: 
+
+1. **Boost Mids on Bass Amp**:
    - Increase Middle knob from 2.5 → **3.5-4.5**
    - This is your "presence" range (800Hz-1.5kHz)
    - Helps bass cut through without getting louder
@@ -721,9 +792,11 @@ When backtrack plays:
 ---
 
 #### Problem 2: "Bass Clashes with Kick Drum"
+
 **Why**: Kick and bass both occupy 60-100 Hz range
 
 **Solutions**:
+
 1. **Slight Low-End Reduction**:
    - Reduce Bass knob on Bass Amp: 7.5 → **6.5-7.0**
    - Leaves room for kick drum thump
@@ -744,9 +817,11 @@ When backtrack plays:
 ---
 
 #### Problem 3: "Too Much Low-End = Muddy Mix"
+
 **Why**: Backtrack already has bass/kick, your bass adds MORE low-end
 
 **Solutions**:
+
 1. **High-Pass Filter** (Advanced):
    - Add EQ Eight after Bass Amp
    - High-pass at 35-40 Hz (removes sub-rumble)
@@ -766,9 +841,11 @@ When backtrack plays:
 ---
 
 #### Problem 4: "Can't Hear Mistakes/Timing in Mix"
+
 **Why**: Reverb and thick tone hide sloppy playing
 
 **Solutions**:
+
 1. **Practice Solo First**:
    - Dial tone WITHOUT reverb initially
    - Make sure notes are clean, timing is tight
@@ -791,6 +868,7 @@ When backtrack plays:
 ### Recommended Workflow for Covers
 
 #### Stage 1: Learn the Part (No Backtrack)
+
 ```
 Goal: Clean playing, no mistakes
 - Bass only, minimal reverb (5%)
@@ -799,6 +877,7 @@ Goal: Clean playing, no mistakes
 ```
 
 #### Stage 2: Dial Tone Solo
+
 ```
 Goal: Find your baseline tone
 - Use settings from this guide
@@ -808,6 +887,7 @@ Goal: Find your baseline tone
 ```
 
 #### Stage 3: Play with Backtrack (First Pass)
+
 ```
 Goal: Identify problems
 - Play your part with backtrack
@@ -819,6 +899,7 @@ Goal: Identify problems
 ```
 
 #### Stage 4: Adjust Tone FOR the Mix
+
 ```
 Goal: Make bass fit the backtrack
 Common adjustments:
@@ -829,6 +910,7 @@ Common adjustments:
 ```
 
 #### Stage 5: Balance Levels
+
 ```
 Goal: Proper volume in mix
 - Bass should be felt AND heard
@@ -841,14 +923,14 @@ Goal: Proper volume in mix
 
 ### Quick Comparison: Solo vs Mix Tone Settings
 
-| Parameter        | Solo Tone (Practice) | With Backtrack (Mix) |
-|------------------|----------------------|----------------------|
-| Bass (Amp)       | 7.5-8.5 (full)      | 6.5-7.5 (moderate)  |
-| Middle (Amp)     | 2.0-3.0 (natural)   | 3.5-4.5 (present)   |
-| Presence (Amp)   | 5.0-6.0 (smooth)    | 6.0-7.5 (cutting)   |
-| Treble (Amp)     | 6.5-7.0 (balanced)  | 7.0-7.5 (articulate)|
-| Reverb Dry/Wet   | 15% (full effect)   | 10-12% (cleaner)    |
-| Overall Volume   | Moderate            | Match kick level    |
+| Parameter      | Solo Tone (Practice) | With Backtrack (Mix) |
+| -------------- | -------------------- | -------------------- |
+| Bass (Amp)     | 7.5-8.5 (full)       | 6.5-7.5 (moderate)   |
+| Middle (Amp)   | 2.0-3.0 (natural)    | 3.5-4.5 (present)    |
+| Presence (Amp) | 5.0-6.0 (smooth)     | 6.0-7.5 (cutting)    |
+| Treble (Amp)   | 6.5-7.0 (balanced)   | 7.0-7.5 (articulate) |
+| Reverb Dry/Wet | 15% (full effect)    | 10-12% (cleaner)     |
+| Overall Volume | Moderate             | Match kick level     |
 
 **Note**: These are tendencies, not rules. Trust your ears!
 
@@ -857,27 +939,33 @@ Goal: Proper volume in mix
 ### Pro Tips for Backtrack Mixing
 
 #### 1. **A/B Reference with Original Song**
+
 - Import original song into Ableton
 - A/B your tone with original bass tone
 - Match the "feel" not exact sound
 - Pay attention to: loudness, brightness, punch
 
 #### 2. **Use Headphone Mix Thoughtfully**
+
 - Bass slightly louder than "real" mix = easier to play
 - But check final balance by lowering bass track
 - What sounds good to play ≠ what sounds good to listen
 
 #### 3. **Check on Different Speakers**
+
 - Headphones emphasize bass (especially closed-back)
 - Check mix on phone speaker, laptop, etc.
 - Bass should be present even on small speakers (means good midrange)
 
 #### 4. **Two Tone Presets**
+
 Save two Bass Amp presets:
+
 - **"Practice Tone"**: Full, detailed, easy to hear mistakes
 - **"Mix Tone"**: Scooped lows slightly, boosted mids, cuts through
 
 #### 5. **Mind the Low-End Buildup**
+
 - Room acoustics + headphones + bass = lots of low-end
 - Don't boost bass EQ to compensate for room
 - Trust meters, not just ears (low-end tricks our hearing)
@@ -887,18 +975,23 @@ Save two Bass Amp presets:
 ### Red Flags to Watch For
 
 #### ❌ "I can't hear my bass at all"
+
 → Boost mids (not bass!), increase presence, check volume fader
 
 #### ❌ "Everything sounds muddy/boomy"
+
 → Reduce bass EQ, check reverb Lo Cut (150 Hz?), high-pass filter at 35 Hz
 
 #### ❌ "Bass sounds great solo but weak in mix"
+
 → Boost mids/presence, reduce reverb, add slight compression
 
 #### ❌ "I keep turning up volume but still can't hear myself"
+
 → Frequency masking issue, boost mids instead of volume
 
 #### ❌ "My bass overpowers the backtrack"
+
 → Lower track volume, reduce bass EQ, check for frequency buildup
 
 ---
@@ -923,23 +1016,27 @@ If any answer is "no", adjust tone and repeat.
 ### Context Matters: Different Backtracks Need Different Tones
 
 #### Sparse Arrangement (Drums + Keys only)
+
 - More room for bass fullness
 - Can use more low-end (Bass 7.5-8.5)
 - More reverb works (15-18%)
 
 #### Dense Mix (Full band + vocals)
+
 - Need to cut through
 - Boost mids aggressively (Mid 4-5)
 - Less reverb (10-12%)
 - Focus on upper-mids/presence
 
 #### Electronic/Hip-Hop Tracks
+
 - Kick drum is HUGE
 - Reduce bass EQ significantly (Bass 6-7)
 - Play around kick, not with it
 - Very tight low-end (less reverb)
 
 #### Live Band Recordings
+
 - More "natural" space
 - Can match your reverb to track ambience
 - Focus on blend, not cutting through
@@ -949,6 +1046,7 @@ If any answer is "no", adjust tone and repeat.
 ### Final Advice
 
 **Start simple**:
+
 1. Get good tone solo (use this guide's settings)
 2. Play with backtrack
 3. If something sounds wrong, adjust ONE thing at a time

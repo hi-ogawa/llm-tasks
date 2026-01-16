@@ -9,6 +9,7 @@
 ## Goal
 
 Create a **single markdown file** containing all Anki manual documentation to:
+
 - Provide as custom instructions/context to LLM chat projects
 - Enable accurate Anki Q&A without hallucinations
 - Use with any LLM that supports large context windows
@@ -20,6 +21,7 @@ Create a **single markdown file** containing all Anki manual documentation to:
 ### Source
 
 GitHub repo: https://github.com/ankitects/anki-manual
+
 - mdBook format with markdown source in `src/`
 - `SUMMARY.md` defines chapter order
 - Already in markdown - no HTML conversion needed

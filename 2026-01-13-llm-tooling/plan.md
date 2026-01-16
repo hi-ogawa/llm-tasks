@@ -18,12 +18,14 @@ Consumer chat interfaces (Claude.ai, ChatGPT) have good UX but produce worse res
 4. **Iteration** - Refine and expand documents across multiple sessions
 
 **Why local agents excel at this:**
+
 - Can read/write files (persistent artifacts)
 - Can fetch and verify against sources
 - Can run scripts (e.g., convert documentation formats)
 - Context accumulates in filesystem, not just conversation
 
 **Why consumer chat falls short:**
+
 - No filesystem access
 - No web fetching (or limited)
 - Artifacts are ephemeral (must copy-paste)
@@ -101,16 +103,19 @@ Document the minimal capabilities required:
 Understanding internals helps evaluate/build solutions:
 
 ### Already Documented
+
 - `notes/llm-tools-api.md` - How function calling works at API level
 - `notes/claude-code-skills.md` - Progressive disclosure and skill system
 
 ### To Explore (If Needed)
+
 - System prompt patterns for agentic behavior
 - Tool registration and execution flow
 - Context management strategies
 - Provider abstraction (for multi-provider solutions)
 
 **Reference implementations:**
+
 - [opencode](https://github.com/opencode-ai/opencode) - Open source Claude Code alternative
 - [Vercel AI SDK](https://github.com/vercel/ai) - Tool schema translation
 
@@ -128,32 +133,38 @@ Understanding internals helps evaluate/build solutions:
 ### Session 1 (2026-01-13)
 
 **Reframed the problem:**
+
 - Original framing: "understand LLM tooling internals"
 - Actual goal: "improve knowledge work with LLMs"
-- Key insight: The question is about *interface and workflow*, not just understanding internals
+- Key insight: The question is about _interface and workflow_, not just understanding internals
 
 **Identified the core tension:**
+
 - Web chat = good UX, limited capabilities
 - Local agents = powerful capabilities, terminal UX friction
 
 **Meta-experiment:**
+
 - This session itself is using opencode + Claude Opus 4.5 for research
 - Started in Plan mode (read-only exploration), switched to Build mode for documentation
 - Demonstrates the explore → capture workflow pattern
 - See `notes/opencode-usage.md` for observations
 
 **Opencode-specific exploration added:**
+
 - Agents (Plan/Build) are the core abstraction, not just "modes"
 - Full customization: custom agents, commands, permissions
 - System-reminder injection for mid-conversation behavior changes
 
 **Researched opencode documentation:**
+
 - Agents can be primary (Tab to switch) or subagents (@mention)
 - Custom agents via JSON config or markdown files
 - Commands are prompt templates with argument support
 - Rich permission system (ask/allow/deny per tool)
 
 **Identified potential custom agents for knowledge work:**
+
 1. **Research agent** - webfetch enabled, file write disabled
 2. **Verify agent** - focused on source verification
 3. **Synthesize agent** - organize verified info into documents
@@ -161,6 +172,7 @@ Understanding internals helps evaluate/build solutions:
 See `notes/opencode-usage.md` for detailed findings.
 
 **Next steps:**
+
 - Create and test custom agents for research workflows
 - Research consumer chat capabilities (Claude Projects, MCP) for comparison
 - Survey web-based agent interfaces
@@ -169,17 +181,20 @@ See `notes/opencode-usage.md` for detailed findings.
 ### Session 1 Continued
 
 **Explored opencode source directly:**
+
 - Read prompt files at `packages/opencode/src/session/prompt/`
 - Found base prompt (`anthropic.txt`), plan prompts, build-switch injection
 - Understood the layered architecture: base + agent-specific + system-reminders
 
 **Discovered real-world agent/command examples:**
+
 - `.opencode/agent/docs.md` - Documentation writing agent
 - `.opencode/agent/triage.md` - Hidden agent with restricted tools
 - `.opencode/command/commit.md` - Commit with `subtask: true`
 - `.opencode/command/rmslop.md` - Remove AI code patterns
 
 **Experienced Plan mode permission blocking:**
+
 - Tried to edit file in Plan mode → blocked by permission system
 - Showed rules: `{"permission":"edit","pattern":"*","action":"deny"}`
 - Exception for plan files: `.opencode/plan/*.md`
@@ -188,11 +203,13 @@ See `notes/opencode-usage.md` for detailed findings.
 **Key insight:** Local source is better than web docs for understanding internals. Agent's filesystem access makes this natural.
 
 **Identified essential workflow patterns:**
+
 1. **Mode switching (Plan/Build)** - Ergonomic, prevents premature changes
 2. **Chat rewinding** - Essential for clean iteration, avoids context pollution
 3. **Context hygiene** - Subtasks, subagents, knowing when to start fresh
 
 **Expanded scope:**
+
 - Other CLI agents to explore: Codex CLI (OpenAI), gemini-cli (Google)
 - CI-like isolated usage: GitHub Copilot agent works well for defined tasks
 - Task-dependent patterns: fuzzy exploration vs. defined coding tasks
@@ -200,12 +217,14 @@ See `notes/opencode-usage.md` for detailed findings.
 See `notes/workflow-patterns.md` for detailed analysis.
 
 **Compared Claude Code vs Opencode integration level:**
+
 - Opencode: System prompt strongly coding-oriented ("best coding agent on the planet")
 - Claude Code: More general feel, same "vibe" as web Claude
 - Both work for non-coding, but Claude Code requires less steering
 - Korean language project (5,000+ vocab cards) works well with Claude Code
 
 **Project-level prompting pattern:**
+
 - Build up guidance in project files (`prompts/requirements-*.md`)
 - Reference via `@prompts/file.md` in conversation
 - Works with any tool, version controlled, evolves with project
@@ -246,11 +265,13 @@ Core question: How do agents avoid blocking during long autonomous tasks?
    - **Missing:** No notification hooks
 
 **Key insight:** Claude Code's notification hook (`Notification` event with `permission_prompt` matcher) is unique and critical for long-running tasks. Other agents require either:
+
 - More permissive defaults (higher risk)
 - Constant terminal monitoring
 - Sandboxing (reduced capability)
 
 **Update:** OpenCode already has `session.idle` event in its bus system! Plugins can subscribe to it. Active development:
+
 - PR #7672 adds native `input_required` notification hooks
 - Community plugins: `opencode-message-notify` (iOS/Bark), `opencode-ntfy` (cross-platform)
 
@@ -288,6 +309,7 @@ See `notes/agent-permissions.md` for detailed comparison.
    - Maximum flexibility but significant dev effort
 
 **Key insight:** Claude Cowork is basically what we're asking for - but macOS-only and Max-tier only. For Linux, the options are:
+
 - Keep using Claude Code (terminal friction, but capabilities are right)
 - Build custom tooling
 - Wait for Cowork on other platforms
@@ -314,36 +336,43 @@ See `notes/directory-backed-chat.md` for detailed comparison.
 ### Session 4 (2026-01-15) - Cloud Sync Alternative
 
 **Explored Obsidian integration potential:**
+
 - User asked about Obsidian vault integration
 - Clarified: Obsidian is just a markdown editor, not a sync solution
 - Real question was about replacing git friction with auto-sync
 
 **Key insight:** The friction layer (git ceremony) can be eliminated with cloud sync:
+
 - Dropbox/Google Drive/OneDrive for automatic sync
 - VSCode for unified interface (markdown preview + integrated terminal)
 - No need for specialized tools like Obsidian
 
 **Documented alternative proposal:**
+
 - Created `notes/cloud-sync-alternative.md`
 - Compares git workflow vs cloud sync approach
 - Recommends cloud sync for personal knowledge work, git for collaborative/versioned work
 
 **Simplified workflow:**
+
 1. Put tasks/ in cloud-synced folder
 2. Open in VSCode (split: markdown preview + terminal)
 3. Run agents in terminal
 4. Files auto-sync - no ceremony
 
 **What this eliminates:**
+
 - `[sync]` command (automatic)
 - `[done]` git ceremony (automatic)
 
 **What remains:**
+
 - `[new]` - scaffold task directory
 - `[continue]` - find task, read context
 - `[note]` - append to scratch
 
 **Explored cloud sync blockers:**
+
 - Google Drive: No official Linux client, no ignore patterns
 - Dropbox: Folder-level ignore only, not pattern-based
 - Syncthing: Requires 2+ devices, self-managed

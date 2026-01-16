@@ -5,6 +5,7 @@ CLI tool to browse and pretty-print Claude Code conversation history from `~/.cl
 ## Why
 
 Claude Code's built-in history browser (`/resume`) works but can be clunky for:
+
 - Searching across all sessions
 - Exporting conversations
 - Quick terminal-based browsing
@@ -19,6 +20,7 @@ Claude Code's built-in history browser (`/resume`) works but can be clunky for:
 ```
 
 Each session JSONL contains messages with:
+
 - `type`: "user" | "assistant" | "summary"
 - `message.content`: text or array with thinking/text blocks
 - `timestamp`, `uuid`, `parentUuid`

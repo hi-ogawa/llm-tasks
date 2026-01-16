@@ -10,16 +10,18 @@ Tools are defined as JSON schemas sent with each request:
 
 ```json
 {
-  "tools": [{
-    "name": "get_weather",
-    "description": "Get weather for a location",
-    "parameters": {
-      "type": "object",
-      "properties": {
-        "location": { "type": "string" }
+  "tools": [
+    {
+      "name": "get_weather",
+      "description": "Get weather for a location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": { "type": "string" }
+        }
       }
     }
-  }]
+  ]
 }
 ```
 
@@ -47,10 +49,10 @@ A single AI SDK call (e.g., `streamText()`) can involve **multiple HTTP requests
 
 ```typescript
 const result = await streamText({
-  model: openai('gpt-4'),
+  model: openai("gpt-4"),
   tools: { weather: weatherTool },
-  maxSteps: 5,  // allows up to 5 round-trips
-  prompt: "What's the weather in Tokyo?"
+  maxSteps: 5, // allows up to 5 round-trips
+  prompt: "What's the weather in Tokyo?",
 });
 ```
 
@@ -59,6 +61,7 @@ The SDK stitches multiple streaming responses into one unified interface. The UX
 ## Billing & Quota Implications
 
 Each underlying HTTP request:
+
 1. Is a **separate billable API call**
 2. **Re-sends the full conversation context**
 
@@ -78,12 +81,15 @@ Rate limits (RPM, TPM) are also hit per-request, so an agentic loop with 10 tool
 Two layers:
 
 ### 1. Model Training
+
 Modern LLMs (GPT-4, Claude) are fine-tuned to:
+
 - Recognize tool definition formats
 - Know when to emit structured `tool_use` output vs. regular text
 - Output valid JSON for tool arguments
 
 ### 2. Prompt Injection
+
 Tool definitions are injected into the prompt by the provider API. Evidence: tools consume input tokens.
 
 ```
@@ -109,6 +115,7 @@ Model: Sees tools as part of prompt context
 AI SDK's role is **API normalization** (translating tool schemas and response formats between providers), not prompt manipulation.
 
 Provider-specific formats:
+
 - OpenAI: `tools[].function.parameters`
 - Anthropic: `tools[].input_schema`
 
@@ -130,12 +137,13 @@ The AI SDK translates its unified tool format to provider-specific formats:
 
 **Repository:** [vercel/ai](https://github.com/vercel/ai)
 
-| Provider | Key File | Function |
-|----------|----------|----------|
-| OpenAI | [`packages/openai/src/chat/openai-chat-prepare-tools.ts`](https://github.com/vercel/ai/blob/main/packages/openai/src/chat/openai-chat-prepare-tools.ts) | `prepareChatTools()` - converts AI SDK tools to OpenAI format (`tools[].function`) |
-| Anthropic | [`packages/anthropic/src/anthropic-prepare-tools.ts`](https://github.com/vercel/ai/blob/main/packages/anthropic/src/anthropic-prepare-tools.ts) | `prepareTools()` - converts AI SDK tools to Anthropic format (`tools[].input_schema`) |
+| Provider  | Key File                                                                                                                                                | Function                                                                              |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| OpenAI    | [`packages/openai/src/chat/openai-chat-prepare-tools.ts`](https://github.com/vercel/ai/blob/main/packages/openai/src/chat/openai-chat-prepare-tools.ts) | `prepareChatTools()` - converts AI SDK tools to OpenAI format (`tools[].function`)    |
+| Anthropic | [`packages/anthropic/src/anthropic-prepare-tools.ts`](https://github.com/vercel/ai/blob/main/packages/anthropic/src/anthropic-prepare-tools.ts)         | `prepareTools()` - converts AI SDK tools to Anthropic format (`tools[].input_schema`) |
 
 The conversion is called from the language model implementations:
+
 - OpenAI: [`packages/openai/src/chat/openai-chat-language-model.ts`](https://github.com/vercel/ai/blob/main/packages/openai/src/chat/openai-chat-language-model.ts)
 - Anthropic: [`packages/anthropic/src/anthropic-messages-language-model.ts`](https://github.com/vercel/ai/blob/main/packages/anthropic/src/anthropic-messages-language-model.ts)
 
@@ -143,9 +151,9 @@ The conversion is called from the language model implementations:
 
 These SDKs send the provider-formatted tools to the API. Prompt injection happens server-side (not visible in client SDKs):
 
-| Provider | Repository |
-|----------|------------|
-| OpenAI | [openai/openai-node](https://github.com/openai/openai-node) |
+| Provider  | Repository                                                                                    |
+| --------- | --------------------------------------------------------------------------------------------- |
+| OpenAI    | [openai/openai-node](https://github.com/openai/openai-node)                                   |
 | Anthropic | [anthropics/anthropic-sdk-typescript](https://github.com/anthropics/anthropic-sdk-typescript) |
 
 ### Provider API Documentation

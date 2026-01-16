@@ -8,6 +8,7 @@
 ## Replace ~/.local/bin with Homebrew
 
 **In Homebrew (can migrate):**
+
 - [x] ast-grep
 - [ ] cloudflared
 - [ ] dagger
@@ -26,6 +27,7 @@
 - [ ] yt-dlp
 
 **Not in Homebrew (keep as-is):**
+
 - bun / bunx - official installer
 - claude - official installer
 - git-spr - gh-bin or ubi

@@ -1,6 +1,6 @@
 # LLM-Assisted Note-to-Fret Positioning: Fine-Tuning on Your Own Data
 
-You've identified the real bottleneck perfectly: **MIDI-to-fingered-tablature is entirely a text-based inference problem**. This is actually a *much better* LLM application than audio transcription because:
+You've identified the real bottleneck perfectly: **MIDI-to-fingered-tablature is entirely a text-based inference problem**. This is actually a _much better_ LLM application than audio transcription because:
 
 1. **Zero audio ambiguity** - you already have correct pitches from MIDI
 2. **Purely symbolic** - notes, strings, frets are all text tokens
@@ -17,6 +17,7 @@ This is exactly what LLMs excel at: learning patterns from text data and making 
 ### Traditional Algorithmic Approaches
 
 **Graph-based optimization** (most common):
+
 - Model each (note, string, fret, finger) combination as a graph node
 - Edges weighted by transition costs (hand movement, stretches, position shifts)
 - Find optimal path using Dijkstra's algorithm or dynamic programming
@@ -24,6 +25,7 @@ This is exactly what LLMs excel at: learning patterns from text data and making 
 - **Issue**: Hand-coded cost functions don't capture personal style
 
 **Path Difference Learning** (Sayegh, 1989):
+
 - Uses gradient descent to learn optimal cost function weights
 - Cost includes static difficulty + transition difficulty
 - **Limitation**: Still requires defining cost function structure
@@ -31,6 +33,7 @@ This is exactly what LLMs excel at: learning patterns from text data and making 
 ### Neural Network Approaches (2010s-present)
 
 **Recurrent Neural Networks**:
+
 - LSTM/Transformer-XL for sequential fingering generation
 - Input: MIDI note sequence + tablature history (past 4 frames)
 - Output: String/fret assignments for current note
@@ -38,6 +41,7 @@ This is exactly what LLMs excel at: learning patterns from text data and making 
 - Trained on DadaGP dataset (5000+ Guitar Pro files)
 
 **Convolutional Neural Networks**:
+
 - "A Machine Learning Approach for MIDI to Guitar Tablature Conversion" (2024)
 - Input: 728 binary features (128 MIDI + 600 tablature history)
 - Output: 150 binary features (6 strings × 25 fret positions)
@@ -45,6 +49,7 @@ This is exactly what LLMs excel at: learning patterns from text data and making 
 - **Dataset**: 955,971 training examples from DadaGP
 
 **Hybrid Approaches**:
+
 - Genetic algorithms for string/fret assignment
 - Neural networks for finger assignment
 - "Guitar Tablature Creation with Neural Networks and Distributed Genetic Search"
@@ -57,7 +62,7 @@ This is exactly what LLMs excel at: learning patterns from text data and making 
 
 ### Advantages You Have
 
-1. **Personal training corpus**: Your past transcriptions encode *your* fingering preferences
+1. **Personal training corpus**: Your past transcriptions encode _your_ fingering preferences
 2. **Consistent style**: Bass players develop personal position preferences
 3. **Bounded problem**: 4 strings, limited fret range per position
 4. **Clear context window**: Fingering decisions depend on ±4 notes typically
@@ -65,6 +70,7 @@ This is exactly what LLMs excel at: learning patterns from text data and making 
 ### Text Representation is Straightforward
 
 **Input format (MIDI notes with context):**
+
 ```
 Measure 1, Beat 1: E2 (MIDI 40)
 Measure 1, Beat 2: G2 (MIDI 43)
@@ -73,6 +79,7 @@ Measure 1, Beat 4: C3 (MIDI 48)
 ```
 
 **Output format (fretboard positions):**
+
 ```
 E2: String E (4), Fret 0
 G2: String E (4), Fret 3
@@ -81,6 +88,7 @@ C3: String A (3), Fret 3
 ```
 
 **Or more concisely:**
+
 ```
 E2[E0] G2[E3] A2[E5] C3[A3]
 ```
@@ -94,11 +102,13 @@ LLMs can easily learn this token mapping with context.
 **No training required** - use GPT-4 or Claude directly with your data.
 
 **Workflow:**
+
 1. Export 3-5 of your past transcriptions as examples
 2. Format as: MIDI note sequence → your fingering choices
 3. Provide new MIDI sequence, ask for fingering
 
 **Example prompt:**
+
 ```
 I'm a bass player who needs optimal fret positioning for MIDI notes.
 
@@ -121,6 +131,7 @@ Fingering:
 ```
 
 **Expected results:**
+
 - 60-75% usable for simple passages (consumer LLM without training)
 - Higher accuracy on patterns similar to examples
 - Struggles with complex position shifts, wide intervals
@@ -130,17 +141,20 @@ Fingering:
 **Fine-tune a small LLM on your corpus** for bass-specific, personalized fingering.
 
 **Recommended models:**
+
 - GPT-2 (117M parameters) - lightest, fastest
 - LLaMA 2 7B - better musical understanding
 - Mistral 7B - good performance/size trade-off
 
 **Data requirements:**
+
 - Minimum: ~20 fully fingered transcriptions
 - Better: 50+ transcriptions
 - Ideal: 100+ transcriptions
 - You said you have "quite a bit" of past work → likely sufficient!
 
 **Data format for fine-tuning:**
+
 ```json
 {
   "instruction": "Assign fret positions for these bass notes",
@@ -151,12 +165,14 @@ Fingering:
 ```
 
 **Training approach:**
+
 1. Extract all MIDI→fingering pairs from your transcriptions
 2. Create sliding window context (4-8 note sequences)
 3. Fine-tune using LoRA/QLoRA (parameter-efficient)
 4. Inference in <100ms on consumer GPU
 
 **Expected results:**
+
 - 85-92% accuracy matching your style (based on similar guitar fingering papers)
 - Learns your position preferences, hand size constraints
 - Generalizes to new songs in familiar styles
@@ -166,11 +182,13 @@ Fingering:
 **Use graph-based algorithm for initial positioning, LLM for style refinement**.
 
 **Workflow:**
+
 1. Generate initial fingering with Dijkstra's algorithm (always playable)
 2. LLM reviews and suggests alternatives matching your style
 3. Accept/modify suggestions
 
 **Why this works:**
+
 - Algorithm guarantees physical playability
 - LLM adds stylistic refinement
 - Safety net against LLM hallucinations
@@ -180,6 +198,7 @@ Fingering:
 **Give LLM your fingering rules explicitly** + learn from examples.
 
 **Example prompt structure:**
+
 ```
 Bass fingering rules:
 1. Prefer open strings for root notes when possible
@@ -258,16 +277,19 @@ trainer.train()
 ### Inference Format
 
 **Input to trained model:**
+
 ```
 Assign fingering: MIDI: D2 F#2 A2 D3 C3 A2 G2
 ```
 
 **Model output:**
+
 ```
 Fingering: A5 E2 E0 A3 A3 E0 E3
 ```
 
 **Confidence scoring**: Some models can output probabilities for alternatives:
+
 ```
 D2: String E, Fret 10 (85%) | String A, Fret 5 (15%)
 ```
@@ -292,12 +314,12 @@ D2: String E, Fret 10 (85%) | String A, Fret 5 (15%)
 
 Based on published research on guitar/bass tablature generation:
 
-| Approach | Expected Accuracy | Training Requirement |
-|----------|------------------|---------------------|
-| Few-shot (GPT-4/Claude) | 60-75% | None (5-10 examples) |
-| Fine-tuned GPT-2 | 75-85% | 20-50 transcriptions |
-| Fine-tuned LLaMA 7B | 85-92% | 50-100 transcriptions |
-| Hybrid (Algorithm + LLM) | 90-95% | 50+ transcriptions |
+| Approach                 | Expected Accuracy | Training Requirement  |
+| ------------------------ | ----------------- | --------------------- |
+| Few-shot (GPT-4/Claude)  | 60-75%            | None (5-10 examples)  |
+| Fine-tuned GPT-2         | 75-85%            | 20-50 transcriptions  |
+| Fine-tuned LLaMA 7B      | 85-92%            | 50-100 transcriptions |
+| Hybrid (Algorithm + LLM) | 90-95%            | 50+ transcriptions    |
 
 "Accuracy" = matches your manual fingering choice when multiple options exist.
 
@@ -317,11 +339,13 @@ Solution: LLM provides 2-3 suggestions, you pick or modify.
 ## Comparison to Existing Tools
 
 **Guitar Pro's auto-tablature:**
+
 - Uses naive "lowest fret" algorithm
 - No learning, no style awareness
 - You still manually correct 40-60%
 
 **Your LLM-based system:**
+
 - Learns your specific style
 - Context-aware positioning
 - Manual correction: 8-15% (with good fine-tuning)
@@ -342,6 +366,7 @@ Solution: LLM provides 2-3 suggestions, you pick or modify.
 **Total time**: 15-20 minutes per song (vs. 45-60 minutes full manual)
 
 **Investment required:**
+
 - Initial: 4-8 hours to prepare training data + fine-tune model
 - Ongoing: None (model improves as you add transcriptions)
 

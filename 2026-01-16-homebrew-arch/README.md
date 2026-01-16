@@ -9,6 +9,7 @@ I made `gh-bin` to one-shot install CLI binaries from GitHub releases to `~/.loc
 The pattern it solves: many dev CLI tools suggest `curl | bash` installation, dropping a binary into local/bin. I wanted something cleaner.
 
 **gh-bin's pragmatic assumptions**:
+
 - Always install to `~/.local/bin` - convenient but general-purpose tools need path flexibility
 - Requires Node runtime - can't bootstrap itself on a fresh machine (this was the original motivation to find alternatives when setting up WSL)
 
@@ -16,12 +17,12 @@ The pattern it solves: many dev CLI tools suggest `curl | bash` installation, dr
 
 ## Options
 
-| Tool | What it is | Tradeoff |
-|------|------------|----------|
-| **ubi** | Direct GitHub/GitLab binary downloader | No install tracking, need `--in` flag |
-| **Homebrew** | Full package manager | Heavier, but has upgrade tracking + huge ecosystem |
-| **mise + ubi** | mise uses ubi as backend | Adds tracking layer, `mise upgrade` works |
-| **aqua** | Declarative CLI version manager | Smaller registry than Homebrew |
+| Tool           | What it is                             | Tradeoff                                           |
+| -------------- | -------------------------------------- | -------------------------------------------------- |
+| **ubi**        | Direct GitHub/GitLab binary downloader | No install tracking, need `--in` flag              |
+| **Homebrew**   | Full package manager                   | Heavier, but has upgrade tracking + huge ecosystem |
+| **mise + ubi** | mise uses ubi as backend               | Adds tracking layer, `mise upgrade` works          |
+| **aqua**       | Declarative CLI version manager        | Smaller registry than Homebrew                     |
 
 ## Decision
 

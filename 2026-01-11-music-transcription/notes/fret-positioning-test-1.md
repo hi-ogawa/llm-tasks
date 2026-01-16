@@ -24,23 +24,27 @@ Note: ABC export app may have bugs - verify notation accuracy.
 Assuming standard 4-string bass (EADG), E,, = open low E:
 
 **Bar 1 (root pedal -> chromatic approach)**
+
 ```
 E,,  E,,  ^F,  G,  ^G,
 E-0  E-0  E-2  E-3  E-4
 ```
 
 **Bar 2 (E -> B -> chromatic fill)**
+
 ```
 E,   B,,  ^C,  D,  ^C,  D,  ^C,  D,  E,
 D-2  A-2  A-4  A-5  A-4  A-5  A-4  A-5  D-2
 ```
 
 **Bar 3** (same as bar 1)
+
 ```
 E-0  E-0  E-0  E-2  E-3  E-4
 ```
 
 **Bar 4 (descending line)**
+
 ```
 A,   B,   ^C   D    ^C   B,   A,   ^G,  E
 A-0  A-2  A-4  A-5  A-4  A-2  A-0  E-4  D-2

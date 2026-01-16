@@ -39,6 +39,7 @@ The "missing fundamental" phenomenon creates additional complexity: bass guitar 
 Research has achieved **F-measure of 0.93 for bass string identification** (which string was plucked), and classification of plucking styles (fingerstyle, picked, muted, slap-thumb, slap-pluck) with reasonable accuracy. Expression detection (vibrato, bending, slides) also shows promise. The IDMT-SMT-Bass dataset provides labeled examples across these techniques.
 
 Problematic cases include:
+
 - **Ghost notes**: Very quiet, often masked, frequently missed by transcription systems
 - **Hammer-ons/pull-offs**: Softer onsets create ambiguous note boundaries
 - **Slides**: Continuous pitch change between notes requires contour tracking
@@ -72,13 +73,13 @@ Training requires meaningful GPU resources (RTX 3080+ with 10GB+ VRAM for fine-t
 
 Your ideal pipeline—audio to fingered notation—can be largely automated with current tools:
 
-| Stage | Recommended Tool | Alternative |
-|-------|-----------------|-------------|
-| Stem separation | Demucs htdemucs_ft | UVR (GUI wrapper) |
-| Audio → MIDI | Basic Pitch / NeuralNote | Melodyne (commercial) |
-| Beat tracking | madmom DBNBeatTracker | librosa (less accurate) |
-| MIDI → Notation | MuseScore CLI | Dorico, Sibelius |
-| Tablature | Guitar Pro import | Direct tab entry |
+| Stage           | Recommended Tool         | Alternative             |
+| --------------- | ------------------------ | ----------------------- |
+| Stem separation | Demucs htdemucs_ft       | UVR (GUI wrapper)       |
+| Audio → MIDI    | Basic Pitch / NeuralNote | Melodyne (commercial)   |
+| Beat tracking   | madmom DBNBeatTracker    | librosa (less accurate) |
+| MIDI → Notation | MuseScore CLI            | Dorico, Sibelius        |
+| Tablature       | Guitar Pro import        | Direct tab entry        |
 
 **Fingering optimization** is the least automated component. MuseScore (yes, the free one) has automatic tablature generation when you link a tab staff to notation, but it uses a naive algorithm that defaults to the lowest possible fret position for each note—essentially keeping everything near the nut regardless of playability. You can manually adjust positions afterward using `Ctrl+Up/Down` to move notes between strings, but there's no intelligent position-aware generation.
 
@@ -86,12 +87,12 @@ Guitar Pro provides better auto-tablature with some understanding of position pl
 
 ## Realistic accuracy expectations by scenario
 
-| Source Material | Expected Pitch Accuracy | Cleanup Required |
-|----------------|------------------------|------------------|
-| DI recording, clean | 90-95% | Light (ghost notes, articulations) |
-| Amped recording, isolated | 85-92% | Moderate |
-| Separated from mix (Demucs) | 75-85% | Significant (transients affected) |
-| Full mix, no separation | 60-75% | Heavy (masking issues) |
+| Source Material             | Expected Pitch Accuracy | Cleanup Required                   |
+| --------------------------- | ----------------------- | ---------------------------------- |
+| DI recording, clean         | 90-95%                  | Light (ghost notes, articulations) |
+| Amped recording, isolated   | 85-92%                  | Moderate                           |
+| Separated from mix (Demucs) | 75-85%                  | Significant (transients affected)  |
+| Full mix, no separation     | 60-75%                  | Heavy (masking issues)             |
 
 Onset detection typically achieves **85-92% F1-score** on clean material, dropping with source separation. Offset (note-off) detection runs 10-15% lower than onset detection—sustain and overlapping notes remain challenging.
 
@@ -100,11 +101,13 @@ Rhythm quantization works well for straightforward parts but can mangle syncopat
 ## Key technical libraries and resources
 
 For Python-based automation:
+
 ```
 pip install basic-pitch demucs music21 librosa madmom pretty_midi
 ```
 
 Essential GitHub repositories:
+
 - **Basic Pitch**: github.com/spotify/basic-pitch (transcription)
 - **NeuralNote**: github.com/DamRsn/NeuralNote (VST plugin)
 - **Demucs**: github.com/facebookresearch/demucs (separation)

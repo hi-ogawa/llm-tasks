@@ -7,12 +7,14 @@ Exploring how to improve LLM-assisted knowledge work - specifically, deep inquir
 **Observation**: Local agents with tool access (Claude Code, opencode) produce significantly better results for deep inquiry than consumer chat interfaces - even for non-coding tasks like researching audio production workflows.
 
 **Example**: The `tasks/2026-01-07-ableton-document/` task used a "coding assistant" to:
+
 - Research Ableton Live workflows with personal context (Linux background, specific gear)
 - Verify LLM claims against official documentation
 - Build structured, verified reference documents
 - Iterate and refine across multiple sessions
 
 This would be difficult or impossible with consumer chat:
+
 - Context evaporates between sessions
 - No tool access for source verification
 - Output is ephemeral (buried in chat history)

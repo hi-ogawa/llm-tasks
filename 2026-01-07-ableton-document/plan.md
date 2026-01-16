@@ -9,6 +9,7 @@
 ## Goal
 
 Create a **single text file** (markdown) containing all Ableton Live 12 manual documentation to:
+
 - Provide as custom instructions/context to LLM chat projects
 - Enable accurate Ableton Q&A without hallucinations
 - Use with any LLM that supports large context windows
@@ -18,15 +19,18 @@ Create a **single text file** (markdown) containing all Ableton Live 12 manual d
 ## Approach
 
 ### Phase 1: Scraping
+
 - Use wget to recursively download Ableton manual HTML
 - Target: https://www.ableton.com/en/live-manual/12/
 
 ### Phase 2: Conversion
+
 - Use BeautifulSoup to extract `#chapter_content` div
 - Use html2text to convert to markdown (preserves tables)
 - Parallel processing for performance
 
 ### Phase 3: Concatenation
+
 - Combine all markdown files into single output
 - Add metadata header
 
@@ -49,6 +53,7 @@ wget \
 ```
 
 **Notes**:
+
 - `--level=2`: Manual index + chapter pages (42 chapters)
 - `--accept-regex`: Only download manual pages, not whole site
 - Output: `data/html/www.ableton.com/en/live-manual/12/`
@@ -94,14 +99,15 @@ tasks/2026-01-07-ableton-document/
 
 **Final Output**: `data/ableton-manual-full.md`
 
-| Metric | Value |
-|--------|-------|
-| Chapters | 42 |
-| Lines | 15,502 |
-| Words | 228,357 |
-| Size | 1,433,897 bytes (1.37 MB) |
+| Metric   | Value                     |
+| -------- | ------------------------- |
+| Chapters | 42                        |
+| Lines    | 15,502                    |
+| Words    | 228,357                   |
+| Size     | 1,433,897 bytes (1.37 MB) |
 
 **Comparison with previous approach** (aiohttp + bs4 + html2text):
+
 - Previous: 228,954 words, 1.4 MB
 - Current: 228,357 words, 1.37 MB
 - Nearly identical output with simpler wget-based workflow
@@ -118,6 +124,7 @@ tasks/2026-01-07-ableton-document/
 **Source URL**: https://www.ableton.com/en/live-manual/12/
 
 **Chapters** (42 total):
+
 1. Welcome to Live
 2. First Steps
 3. Live Concepts
@@ -128,7 +135,7 @@ tasks/2026-01-07-ableton-document/
 8. Clip View
 9. Audio Clips, Tempo, and Warping
 10. Editing MIDI
-... (and 32 more)
+    ... (and 32 more)
 
 ## Copyright Notice
 

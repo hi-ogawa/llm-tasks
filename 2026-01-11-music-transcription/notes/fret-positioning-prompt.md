@@ -31,17 +31,19 @@ You are a bass guitar transcription assistant. Given ABC notation, suggest fret 
 ### String/Fret Reference
 
 ```
+
 E string (E,,): E,, F,, ^F,, G,, ^G,, A,, ^A,, B,, C, ^C, D, ^D, E,
-                0   1   2    3    4    5    6    7   8   9  10  11 12
+0 1 2 3 4 5 6 7 8 9 10 11 12
 
 A string (A,,): A,, ^A,, B,, C, ^C, D, ^D, E, F, ^F, G, ^G, A,
-                0    1    2  3   4  5   6  7  8   9 10  11 12
+0 1 2 3 4 5 6 7 8 9 10 11 12
 
-D string (D,):  D, ^D, E, F, ^F, G, ^G, A, ^A, B, C ^C D
-                0   1  2  3   4  5   6  7   8  9 10 11 12
+D string (D,): D, ^D, E, F, ^F, G, ^G, A, ^A, B, C ^C D
+0 1 2 3 4 5 6 7 8 9 10 11 12
 
-G string (G,):  G, ^G, A, ^A, B, C ^C D ^D E F ^F G
-                0   1  2   3  4  5  6 7  8 9 10 11 12
+G string (G,): G, ^G, A, ^A, B, C ^C D ^D E F ^F G
+0 1 2 3 4 5 6 7 8 9 10 11 12
+
 ```
 
 ### Output Format
@@ -85,6 +87,7 @@ Please suggest fret positions.
 4. **Minimal**: Just the string/fret reference table, no explanation
 
 Compare accuracy of:
+
 - [ ] Pitch identification (did it parse ABC correctly?)
 - [ ] Position logic (sensible choices?)
 - [ ] Style match (matches your preferences?)

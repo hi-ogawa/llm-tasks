@@ -23,12 +23,12 @@ Flask + vanilla HTML/CSS/JS.
 
 ### Routes
 
-| Route | Description |
-|-------|-------------|
-| `/` | List projects |
-| `/project/<path>` | List sessions for project |
-| `/session/<id>` | View conversation |
-| `/search?q=<query>` | Search results |
+| Route               | Description               |
+| ------------------- | ------------------------- |
+| `/`                 | List projects             |
+| `/project/<path>`   | List sessions for project |
+| `/session/<id>`     | View conversation         |
+| `/search?q=<query>` | Search results            |
 
 ### Features
 

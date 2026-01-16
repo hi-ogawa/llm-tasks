@@ -6,11 +6,11 @@
 
 The path looks like a home directory but there's no `linuxbrew` user - it's a fixed location Homebrew chose for Linux. Everything is owned by your user.
 
-| Platform | Location | Reason |
-|----------|----------|--------|
-| macOS Intel | `/usr/local` | Traditional Unix location |
-| macOS ARM | `/opt/homebrew` | Apple's requirement for ARM |
-| Linux | `/home/linuxbrew/.linuxbrew` | Avoid conflicts with system `/usr/local` |
+| Platform    | Location                     | Reason                                   |
+| ----------- | ---------------------------- | ---------------------------------------- |
+| macOS Intel | `/usr/local`                 | Traditional Unix location                |
+| macOS ARM   | `/opt/homebrew`              | Apple's requirement for ARM              |
+| Linux       | `/home/linuxbrew/.linuxbrew` | Avoid conflicts with system `/usr/local` |
 
 ## Directory structure
 
@@ -37,6 +37,7 @@ brew install ripgrep
 3. Creates symlink: `bin/rg` → `../Cellar/ripgrep/14.1.0/bin/rg`
 
 This symlink-based approach allows:
+
 - Multiple versions in Cellar simultaneously
 - Easy switching between versions
 - Clean uninstall (just remove from Cellar, update symlinks)
@@ -61,6 +62,7 @@ Homebrew/
 ```
 
 The formulae (package definitions) live in a separate repo `homebrew/homebrew-core` that gets cloned lazily on first `brew install`. It goes to:
+
 ```
 /home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core/
 ```
@@ -74,6 +76,7 @@ Homebrew itself is written in Ruby. It downloads its own Ruby (`portable-ruby-3.
 Homebrew suggests installing `base-devel` and `brew install gcc` for building packages from source.
 
 **On Arch, probably skip both:**
+
 - Arch has fresh system gcc (rolling release)
 - Single-binary CLI tools all have bottles (no compilation)
 - Mixing Homebrew's gcc with system = ABI conflicts
@@ -84,6 +87,7 @@ The recommendation is aimed at old distros (Ubuntu LTS, CentOS) with outdated co
 ## PATH priority
 
 `brew shellenv` **prepends** Homebrew's bin to PATH:
+
 ```bash
 PATH="/home/linuxbrew/.linuxbrew/bin:...${PATH}"
 ```
@@ -91,10 +95,12 @@ PATH="/home/linuxbrew/.linuxbrew/bin:...${PATH}"
 This means Homebrew binaries take priority over system ones.
 
 **Mitigated by:**
+
 - Homebrew gcc uses versioned names (`gcc-15`, not `gcc`) - no shadow
 - CLI tools (ripgrep, yt-dlp) have unique names - no system equivalents
 
 **Watch out for:**
+
 - Installing same tool via both Homebrew and pacman
 - Formulas that install common binary names
 
@@ -103,6 +109,7 @@ This means Homebrew binaries take priority over system ones.
 ### What's a bottle
 
 Prebuilt binary tarball, so users don't compile from source:
+
 ```
 ripgrep-14.1.0.x86_64_linux.bottle.tar.gz
 ├── ripgrep/
@@ -117,11 +124,13 @@ Filename encodes: name, version, architecture, OS.
 ### Where bottles are hosted
 
 **GitHub Packages** (Container Registry):
+
 ```
 ghcr.io/v2/homebrew/core/<formula>/blobs/sha256:...
 ```
 
 Example from install output:
+
 ```
 ==> Downloading https://ghcr.io/v2/homebrew/core/portable-ruby/blobs/sha256:63a9c333...
 ```
@@ -160,6 +169,7 @@ Bottles have **build provenance** via Sigstore - cryptographic attestation that 
 Some tools pull many dependencies (e.g., `deno` pulls sqlite, zlib, libffi, ncurses, etc.). These are Homebrew's own copies, not system libraries.
 
 **Check before installing:**
+
 ```bash
 brew info <package>  # look at "Required:" section
 ```
@@ -167,6 +177,7 @@ brew info <package>  # look at "Required:" section
 **For tools with many deps:** GitHub releases via gh-bin/ubi may be better - upstream builds are typically more self-contained.
 
 **Good news:** Uninstall is clean - `brew uninstall` autoremoving unused deps:
+
 ```
 $ brew uninstall deno
 Uninstalling deno...

@@ -61,17 +61,18 @@ YYYY-MM-DD-[topic]/
 
 Shorthand commands for common workflow actions. The `[command]` syntax works well with Claude Code; other agents may need natural language equivalents.
 
-| Command | Action |
-|---------|--------|
-| `[q]` | Quick question - answer ephemerally, no files |
-| `[new]` | Create new task directory, scaffold files, start working |
-| `[continue]` | Find task, read context, resume |
-| `[note]` | Append to `notes/scratch.md` with timestamp |
-| `[promote]` | Convert scratch notes into dedicated task |
-| `[done]` | Git add, commit (with message), push |
-| `[sync]` | Git pull --rebase --autostash |
+| Command      | Action                                                   |
+| ------------ | -------------------------------------------------------- |
+| `[q]`        | Quick question - answer ephemerally, no files            |
+| `[new]`      | Create new task directory, scaffold files, start working |
+| `[continue]` | Find task, read context, resume                          |
+| `[note]`     | Append to `notes/scratch.md` with timestamp              |
+| `[promote]`  | Convert scratch notes into dedicated task                |
+| `[done]`     | Git add, commit (with message), push                     |
+| `[sync]`     | Git pull --rebase --autostash                            |
 
 Examples:
+
 ```
 [q] what's the difference between MCP and LSP?
 [new] vim-keybindings

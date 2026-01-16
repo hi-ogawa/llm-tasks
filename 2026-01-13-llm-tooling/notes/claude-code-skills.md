@@ -36,22 +36,23 @@ When explaining code:
 
 ### Skill Locations
 
-| Location | Path | Scope |
-|----------|------|-------|
+| Location | Path                | Scope             |
+| -------- | ------------------- | ----------------- |
 | Personal | `~/.claude/skills/` | You, all projects |
-| Project | `.claude/skills/` | Team members |
+| Project  | `.claude/skills/`   | Team members      |
 
 ## Context Efficiency (Progressive Disclosure)
 
 Skills use a **three-tier progressive disclosure** system to optimize context usage:
 
-| Level | What's Loaded | When |
-|-------|---------------|------|
-| 1 | Skill name + description only | At startup (~50-100 tokens per skill) |
-| 2 | Full `SKILL.md` content | When Claude determines skill is relevant |
-| 3+ | Supporting files (`reference.md`, etc.) | On-demand during execution |
+| Level | What's Loaded                           | When                                     |
+| ----- | --------------------------------------- | ---------------------------------------- |
+| 1     | Skill name + description only           | At startup (~50-100 tokens per skill)    |
+| 2     | Full `SKILL.md` content                 | When Claude determines skill is relevant |
+| 3+    | Supporting files (`reference.md`, etc.) | On-demand during execution               |
 
 Key insight from Anthropic:
+
 > "Agents with a filesystem and code execution tools don't need to read the entirety of a skill into their context window when working on a particular task. This means that the amount of context that can be bundled into a skill is effectively unbounded."
 
 ### Multi-file Structure
@@ -66,6 +67,7 @@ my-skill/
 ```
 
 In `SKILL.md`, reference supporting files:
+
 ```markdown
 For API details, see [reference.md](reference.md)
 ```
@@ -74,20 +76,20 @@ Claude reads `reference.md` **only when the task requires it**.
 
 ## Skills vs Slash Commands
 
-| Feature | Skills | Slash Commands |
-|---------|--------|----------------|
-| Invocation | Automatic (Claude decides) | Explicit (`/command`) |
-| Structure | Directory + SKILL.md | Single .md file |
-| Best for | Complex, auto-discovered workflows | Quick, frequently-used prompts |
+| Feature    | Skills                             | Slash Commands                 |
+| ---------- | ---------------------------------- | ------------------------------ |
+| Invocation | Automatic (Claude decides)         | Explicit (`/command`)          |
+| Structure  | Directory + SKILL.md               | Single .md file                |
+| Best for   | Complex, auto-discovered workflows | Quick, frequently-used prompts |
 
 ## Configuration Options
 
-| Option | Purpose |
-|--------|---------|
-| `name` | Required. Lowercase with hyphens (max 64 chars) |
-| `description` | Required. Tells Claude when to use this skill (max 1024 chars) |
-| `allowed-tools` | Restrict available tools (e.g., `Read, Grep, Bash(git:*)`) |
-| `model` | Specify Claude model to use |
+| Option          | Purpose                                                        |
+| --------------- | -------------------------------------------------------------- |
+| `name`          | Required. Lowercase with hyphens (max 64 chars)                |
+| `description`   | Required. Tells Claude when to use this skill (max 1024 chars) |
+| `allowed-tools` | Restrict available tools (e.g., `Read, Grep, Bash(git:*)`)     |
+| `model`         | Specify Claude model to use                                    |
 
 ## Benefits
 

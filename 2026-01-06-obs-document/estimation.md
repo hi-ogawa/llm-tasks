@@ -7,18 +7,18 @@
 
 ### Categories (10 total)
 
-| ID | Category Name           | Articles (Page 1) | Pagination |
-|----|-------------------------|-------------------|------------|
-| 0  | F.A.Q.s                 | 10                | Yes        |
-| 1  | Getting Started         | 8                 | Yes        |
-| 2  | Troubleshooting Guides  | 9                 | Yes        |
-| 3  | OBS Studio              | 12                | Yes        |
-| 4  | Streaming               | ?                 | ?          |
-| 5  | Recording               | ?                 | ?          |
-| 6  | Sources & Filters       | 13                | Yes        |
-| 7  | Audio                   | ?                 | ?          |
-| 8  | Scripting & Development | 3                 | Yes        |
-| 9  | Post-Production         | ?                 | ?          |
+| ID  | Category Name           | Articles (Page 1) | Pagination |
+| --- | ----------------------- | ----------------- | ---------- |
+| 0   | F.A.Q.s                 | 10                | Yes        |
+| 1   | Getting Started         | 8                 | Yes        |
+| 2   | Troubleshooting Guides  | 9                 | Yes        |
+| 3   | OBS Studio              | 12                | Yes        |
+| 4   | Streaming               | ?                 | ?          |
+| 5   | Recording               | ?                 | ?          |
+| 6   | Sources & Filters       | 13                | Yes        |
+| 7   | Audio                   | ?                 | ?          |
+| 8   | Scripting & Development | 3                 | Yes        |
+| 9   | Post-Production         | ?                 | ?          |
 
 **Checked categories (6/10)**: 55 articles on first pages
 **Unchecked categories (4/10)**: Estimated ~10 articles each = ~40 articles
@@ -26,17 +26,20 @@
 ## URL Patterns
 
 ### Category Pages
+
 - Pattern: `https://obsproject.com/kb/category/{ID}`
 - Pagination: `https://obsproject.com/kb/category/{ID}?page={N}`
 - Articles per page: ~8-13
 
 ### Article Pages
+
 - Pattern: `https://obsproject.com/kb/{article-slug}`
 - Example: `https://obsproject.com/kb/quick-start-guide`
 
 ## HTML Structure
 
 ### Category Pages
+
 ```html
 <li>
   <a href="https://obsproject.com/kb/{article-slug}">{Article Title}</a>
@@ -45,6 +48,7 @@
 ```
 
 ### Article Pages
+
 - Title: `<h1>` or similar
 - Content: Semantic HTML (h2, h3, p, img, etc.)
 - Metadata: Date shown (e.g., "2021-08-25")
@@ -54,6 +58,7 @@
 ## Sample Article Analysis
 
 **Article**: Quick Start Guide
+
 - **URL**: https://obsproject.com/kb/quick-start-guide
 - **Word count**: ~450-500 words
 - **Images**: 5 screenshots
@@ -63,11 +68,13 @@
 ## Rough Estimation
 
 ### Conservative Estimate
+
 - **Total categories**: 10
 - **Avg articles per category**: 10-15
 - **Estimated total articles**: 100-150 articles
 
 ### Size Projection
+
 - **Avg words per article**: 400-600 words
 - **Total words estimate**: 40,000-90,000 words
 - **Compared to Ableton**: 228,954 words
