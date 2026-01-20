@@ -149,6 +149,7 @@ The mapping file becomes your canonical "collection" - portable across platforms
 
 ## Questions to resolve
 
+- [x] Can YouTube + YT Music workflow replace VLC? → **Yes**
 - [ ] How many songs in VLC collection? (determines if manual review is feasible)
 - [ ] Where are the opus files located? (path to scan)
 - [ ] Edge cases: time-range clips, multi-song videos → skip or handle separately?
@@ -172,3 +173,11 @@ The mapping file becomes your canonical "collection" - portable across platforms
 - Reviewed yt-dlp-gui source - confirmed no video ID stored in files
 - Brainstormed Phase 1 (search-based matching) and Phase 2 (platform import)
 - Decided: mapping file as portable canonical collection
+- Researched YouTube Music Artists tab behavior (see `notes/youtube-music-library.md`)
+  - **Key finding:** Artists tab only shows "songs" (official music with ISRCs), not regular YouTube videos
+  - Covers, live performances, unofficial uploads won't appear in Artists tab even if liked
+- **Resolved:** YouTube + YT Music workflow can replace VLC
+  - New workflow: Like on YouTube → listen on YT Music mobile
+  - Check "Music in this video" description section to identify song association
+  - Unofficial content → fallback to "unofficial" playlist (no Artists tab, but still accessible)
+  - Even with friction, simpler than manual download + transfer

@@ -1,24 +1,65 @@
 # Local Audio → Streaming Migration
 
-Moving from local audio file workflow (VLC + custom yt-dlp-like tool) to modern streaming service (YouTube Music).
+Enabling mobile listening via YouTube Music while keeping YouTube as the primary activity hub.
 
 ## Background
 
-Current setup:
+**Current workflow:**
 - Desktop: YouTube + ublock for discovery/listening
-- Custom desktop GUI app (yt-dlp-like) to download with proper metadata (artist, title, thumbnail)
+- "Todo" YouTube playlist: bass cover candidates (ephemeral - remove after covering)
+- Custom desktop GUI app (yt-dlp-like) to download with proper metadata
+- VLC downloads: permanent archive, superset of todo playlist
 - Mobile: VLC for commuting, browsing curated collection by artist
 
-Target:
-- YouTube Music Premium with Artists tab for organization
-- Eliminates manual download/transfer workflow for mobile listening
-- Artists tab organizes by channel name, which suffices for 99% of use cases
+**Pain point:** Manual download/transfer workflow for mobile listening
 
-## Problem
+**YouTube Music state:** Only 8 songs in library (from rare likes + official song associations)
 
-YouTube Music has no batch import. Must add songs to library one-by-one. To migrate:
-1. Need to map existing local audio files → original YouTube video IDs
-2. Need to batch-add video IDs to YouTube Music library (no native feature)
+## Goal
+
+Primary: VLC collection accessible on mobile via YouTube Music
+
+Secondary:
+- "Todo" playlist items sync to YT Music library
+- Recover removed "todo" items by cross-referencing VLC downloads
+- Handle unofficial content (live performances, etc.) gracefully
+
+**Open to:** Changing YouTube habits (e.g., liking videos) if it replaces the local download workflow
+
+## Constraints
+
+**YouTube Music "Artists tab" limitation:**
+- Only shows content with official music metadata (ISRCs) - "songs"
+- Regular YouTube videos (covers, live performances, unofficial) don't appear
+- See `notes/youtube-music-library.md` for details
+
+**Implication:** Not all VLC content will get Artists tab organization. Unofficial content still accessible via Liked playlist or custom playlist - just no per-artist mobile browsing.
+
+## Conclusion
+
+**Yes, YouTube + YouTube Music can replace the VLC workflow.**
+
+New workflow:
+
+**On YouTube (main activity):**
+1. Add to "Good music" playlist
+2. (Optional) Also add to "todo" playlist if bass practice candidate
+
+**On YT Music (async, when needed for mobile):**
+3. Review "Good music" playlist
+4. For songs with "Add to library" option → do it → Artists tab
+
+**Why this works:**
+- "Save" action stays on YouTube (playlist, not like)
+- "Organize" action happens async on YT Music
+- Keeps curated music separate from likes (which affect recommendations)
+- Still simpler than: download → transfer → VLC
+
+**Deferred:** Fallback playlist for non-library-able songs. Revisit when filtering becomes needed.
+
+## Next Steps
+
+Migrate existing VLC collection (batch import) - see `plan.md`
 
 ## Files
 
