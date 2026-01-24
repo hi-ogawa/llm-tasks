@@ -17,55 +17,69 @@ Run the guided installer:
 archinstall
 ```
 
-Walk through the menus:
+Menu items (as of 2026-01):
 
-| Setting | Value |
-|---------|-------|
-| Language | English |
-| Mirrors | Select your region |
-| Locales | `en_US.UTF-8` |
-| Disk configuration | Best-effort default, ext4 or btrfs |
-| Disk encryption | Skip (unless needed) |
-| Bootloader | systemd-boot |
-| Swap | True (zram) |
-| Hostname | Pick a name |
-| Root password | Skip (sudo user is enough) |
-| User account | Create user, add to sudo/wheel |
-| Profile | Desktop → GNOME |
-| Audio | pipewire |
-| Kernel | linux |
-| Additional packages | `git base-devel` |
-| Network | NetworkManager |
-| Timezone | Your timezone |
+| Menu Item                 | Value                                     |
+| ------------------------- | ----------------------------------------- |
+| Archinstall language      | English                                   |
+| Locales                   | `en_US.UTF-8`                             |
+| Mirrors and repositories  | Select your region                        |
+| **Disk configuration**    | Best-effort default, ext4                 |
+| Swap                      | zram enabled (default)                    |
+| Bootloader                | systemd-boot (default)                    |
+| **Kernels**               | `linux` (default)                         |
+| Hostname                  | Pick a name                               |
+| Authentication            | Create user with sudo, skip root password |
+| Profile                   | Desktop → GNOME                           |
+| Applications              | Audio: pipewire, Bluetooth: enabled       |
+| Network configuration     | NetworkManager                            |
+| Parallel Downloads        | 5 (speeds up install)                     |
+| Additional packages       | `git base-devel`                          |
+| Timezone                  | Your timezone                             |
+| Automatic time sync (NTP) | true (default)                            |
+
+**Bold** = mandatory
 
 After install completes, skip chroot and reboot. Remove USB when prompted.
 
 ## Post-install
 
-### AUR helper
-
-Install yay for AUR packages:
+### GNOME settings
 
 ```bash
-git clone https://aur.archlinux.org/yay.git
-cd yay
+# touchpad
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+
+# key repeat (Settings > Accessibility > Typing also works)
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 25  # default 30
+gsettings set org.gnome.desktop.peripherals.keyboard delay 150           # default 500
+```
+
+Via **gnome-tweaks**:
+
+- Keyboard & Mouse → Additional Layout Options → Ctrl position → Swap Ctrl and Caps Lock
+- Fonts → Monospace → Roboto Mono
+
+### Install apps
+
+- install Yay
+
+```bash
+git clone https://aur.archlinux.org/yay-bin.git ~/code/installed/yay-bin
+cd ~/code/installed/yay-bin
 makepkg -si
-cd .. && rm -rf yay
 ```
 
-### Development tools
-
-Setup Homebrew (same as WSL):
+- more packages
 
 ```bash
-# https://docs.brew.sh/Homebrew-on-Linux
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-brew install gh yazi
+yay -S google-chrome visual-studio-code-insiders-bin ttf-roboto-mono noto-fonts-cjk
 ```
 
-### Dotfiles
+- install Homebrew
+  - https://docs.brew.sh/Homebrew-on-Linux
+
+### Setup Dotfiles
 
 ```bash
 git clone https://github.com/hi-ogawa/dotfiles ~/code/personal/dotfiles

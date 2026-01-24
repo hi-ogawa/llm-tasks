@@ -3,11 +3,13 @@
 ## Current State
 
 **dotfiles repo** (`~/code/personal/dotfiles`):
+
 - `sync.sh` - handles Linux/WSL/Windows config sync
 - Configs: `.bashrc`, `.gitconfig`, vscode, claude, opencode
 - Arch setup guide is minimal (links to old gists)
 
 **windows-setup repo** (`~/code/personal/windows-setup`):
+
 - Comprehensive `setup.md` guide for Windows + WSL
 - Good reference for the level of detail we want
 
@@ -40,5 +42,6 @@ Create a comprehensive Arch Linux setup guide in dotfiles, similar to windows-se
 ## Notes
 
 Reference external sources:
+
 - Arch Wiki (primary)
 - Existing gist: https://gist.github.com/hi-ogawa/a873d9406f580dfdf1e391a427a4dd0b
