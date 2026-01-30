@@ -1,8 +1,4 @@
-{% extends "base.html" %}
-
-{% block title %}Search - Claude History{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Search - Claude History{% endblock %} {% block content %}
 <h1>Search{% if query %}: "{{ query }}"{% endif %}</h1>
 
 {% if results %}
@@ -20,5 +16,4 @@
 <p>No results found for "{{ query }}"</p>
 {% else %}
 <p>Enter a search term above.</p>
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}

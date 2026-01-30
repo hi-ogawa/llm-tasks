@@ -25,11 +25,13 @@ Bass → Compressor (light) → Octave → Overdrive/Fuzz → Envelope Filter �
 - **Digital** (e.g., Boss OC-5, TC Sub'n'Up): Better tracking, more options
 
 **Tips:**
+
 - Play cleanly for best tracking (especially analog)
 - Favor neck pickup for cleaner fundamental
 - Single notes track better than chords
 
 **Classic synth bass technique:**
+
 - Play an octave higher than the "actual" bass part
 - Let the octaver (-1 oct) fill in the sub bass root
 - Example: Part is in E → play at 7th fret (octave E), octaver adds low E
@@ -43,6 +45,7 @@ Bass → Compressor (light) → Octave → Overdrive/Fuzz → Envelope Filter �
 - Light OD = warm synth; heavy fuzz = aggressive synth
 
 **Placement debate:**
+
 - Before filter = more harmonics for filter to shape (classic)
 - After filter = cleaner filter response, then dirtied up
 
@@ -70,12 +73,12 @@ Bass → Envelope Filter → Octave (digital) → Drive → Amp
 
 ## Classic Synth Bass References
 
-| Artist/Song | Tone Character |
-|-------------|----------------|
-| Bootsy Collins | Envelope filter + octave, funky squelch |
-| Muse (Hysteria) | Fuzz + octave, aggressive |
-| RHCP (Higher Ground) | Envelope filter, funky |
-| Jamiroquai | Clean synth-ish, envelope filter |
+| Artist/Song          | Tone Character                          |
+| -------------------- | --------------------------------------- |
+| Bootsy Collins       | Envelope filter + octave, funky squelch |
+| Muse (Hysteria)      | Fuzz + octave, aggressive               |
+| RHCP (Higher Ground) | Envelope filter, funky                  |
+| Jamiroquai           | Clean synth-ish, envelope filter        |
 
 ## Software Options (Ableton)
 
@@ -87,6 +90,7 @@ Missing: Amp, Overdrive, Shifter (no native pitch shifting)
 ### Octave/Pitch Shifting
 
 **Free plugins (required for Live Lite):**
+
 - **Pitchproof** (Aegean Music) - General pitch shifter, set to -12st for octave down
   - Works but not octaver-style UI (no dedicated Oct1/Oct2/Dry blend)
   - Manage dry/wet manually
@@ -97,13 +101,15 @@ Missing: Amp, Overdrive, Shifter (no native pitch shifting)
   - 32-bit only, won't work in 64-bit Ableton
 
 **Paid option:**
+
 - **Audiority Octaver 82** (~$29) - Proper OC-2 emulation, 64-bit
 
-**Note:** MFreqShifter is a *frequency* shifter, not pitch shifter.
+**Note:** MFreqShifter is a _frequency_ shifter, not pitch shifter.
 Adds fixed Hz (breaks harmonics) vs multiplying (preserves pitch).
 Good for weird FX, not clean octave-down.
 
 **Hybrid approach:**
+
 - Use Zoom B1 Four for octave (zero latency)
 - Send into Ableton for filter/drive
 
@@ -126,28 +132,33 @@ Good for weird FX, not clean octave-down.
 ## Quick Start Settings
 
 ### Octave
+
 - Sub level: 50-70%
 - Dry level: 30-50%
 - Upper octave: Off or subtle
 
 ### Envelope Filter
+
 - Sensitivity: Medium (adjust to playing)
 - Range: Wide for synth sweep
 - Direction: Down for classic synth bass
 
 ### Drive
+
 - Gain: Low-medium (warmth, not distortion)
 - Tone: Darker for synth, brighter for cut
 
 ## Sources
 
 ### Signal Chain & Pedal Order
+
 - [BOSS - Order of Operation: Bass Effects Signal Chain](https://articles.boss.info/order-of-operation-a-guide-to-bass-effects-signal-chain/)
 - [TalkBass - Octaver before or after envelope filter?](https://www.talkbass.com/threads/octaver-before-or-after-envelope-filter.1542704/)
 - [TalkBass - Pedal order guide](https://www.talkbass.com/threads/pedal-order-a-guide.1358441/)
 - [TalkBass - Comps, Synths, Filters & Octaves](https://www.talkbass.com/threads/can-we-talk-about-the-start-of-the-signal-chain-comps-synths-filters-octaves.1456465/)
 
 ### Software & Plugins
+
 - [Pitchproof (free pitch shifter)](https://aegeanmusic.com/pitchproof-specs)
 - [Kapitonov Plugins Pack (free, includes Octaver)](https://github.com/olegkapitonov/Kapitonov-Plugins-Pack) - Linux origin, experimental Win VST3
 - [OC-D2 (free OC-2 emulation, 32-bit only)](https://bedroomproducersblog.com/2015/04/16/free-octaver-vst-plugin/)
@@ -156,5 +167,6 @@ Good for weird FX, not clean octave-down.
 - [Ableton Live Lite Features](https://www.ableton.com/en/products/live-lite/features/)
 
 ### Frequency vs Pitch Shifting
+
 - Pitch shifting: multiplies frequencies (preserves harmonics)
 - Frequency shifting: adds fixed Hz (breaks harmonics, metallic FX)

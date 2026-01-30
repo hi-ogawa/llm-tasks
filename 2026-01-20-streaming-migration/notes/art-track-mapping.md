@@ -3,10 +3,12 @@
 ## The Problem
 
 When you add an OMV (Official Music Video) to a YT Music playlist, the UI shows:
+
 - Art Track thumbnail (not the video thumbnail you added)
 - Song/Video toggle switch on the player page
 
 Example:
+
 - Art Track: https://music.youtube.com/watch?v=rT_isNWT4gQ (Dirty Loops - Next to You)
 - Video: https://music.youtube.com/watch?v=rV9uCmlMQ1c (same song, music video version)
 
@@ -22,11 +24,12 @@ track = playlist['tracks'][0]  # The OMV
 ```
 
 Response for OMV track:
+
 ```json
 {
   "videoId": "rV9uCmlMQ1c",
   "title": "Next to You",
-  "artists": [{"name": "Dirty Loops", "id": "..."}],
+  "artists": [{ "name": "Dirty Loops", "id": "..." }],
   "album": null,
   "videoType": "MUSIC_VIDEO_TYPE_OMV"
 }
@@ -55,6 +58,7 @@ print(track.get('counterpart'))  # None
 ```
 
 Also tried from Art Track side:
+
 ```python
 watch = yt.get_watch_playlist('rT_isNWT4gQ')  # Art Track
 track = watch['tracks'][0]
@@ -85,6 +89,7 @@ The YT Music web UI clearly has the Song/Video toggle, but ytmusicapi doesn't ex
 ## Relevant ytmusicapi Code
 
 From `ytmusicapi/parsers/watch.py`:
+
 ```python
 counterpart = None
 if PPVWR in result:
@@ -102,6 +107,7 @@ The parser exists, but the `PPVWR` renderer isn't present in the API response.
 ### Option 1: Heuristic Search (Current Approach)
 
 For each OMV/UGC track:
+
 1. Search `{title} {artist}` with `filter='songs'`
 2. Find matching ATV (Art Track) with same title + artist
 3. Use the Art Track's album to get `feedbackTokens`
@@ -119,11 +125,13 @@ For each OMV/UGC track:
 **Investigation:**
 
 `/youtubei/v1/player` response (`data/player-response.json`):
+
 - Contains `videoDetails.musicVideoType` (e.g., `MUSIC_VIDEO_TYPE_ATV`)
 - Contains streaming data, playability status
 - **No counterpart/mapping data**
 
 `/youtubei/v1/next` response (`data/next-response.json`):
+
 - Captured from Art Track https://music.youtube.com/watch?v=rT_isNWT4gQ
 - **Contains counterpart data!**
 
@@ -155,6 +163,7 @@ Initial testing returned `counterpart: None`. Re-testing with fresh credentials:
 ### Option 3: Use ISRC Metadata
 
 If we could get the ISRC code for a video, we could look up the corresponding Art Track. But:
+
 - ISRC isn't exposed in ytmusicapi responses
 - Would require additional API calls
 
@@ -163,6 +172,7 @@ If we could get the ISRC code for a video, we could look up the corresponding Ar
 **Option 2 is viable** - `get_watch_playlist` returns counterpart data with fresh auth.
 
 For OMV → Art Track mapping:
+
 ```python
 watch = yt.get_watch_playlist(omv_video_id)
 counterpart = watch["tracks"][0].get("counterpart")
@@ -171,6 +181,7 @@ if counterpart and counterpart.get("videoType") == "MUSIC_VIDEO_TYPE_ATV":
 ```
 
 For Art Track → OMV mapping (what we tested):
+
 ```python
 watch = yt.get_watch_playlist(art_track_id)
 counterpart = watch["tracks"][0].get("counterpart")
@@ -179,6 +190,7 @@ if counterpart and counterpart.get("videoType") == "MUSIC_VIDEO_TYPE_OMV":
 ```
 
 **Tested both directions (2026-01-21):**
+
 - Art Track (rT_isNWT4gQ) → OMV (rV9uCmlMQ1c) ✓
 - OMV (rV9uCmlMQ1c) → Art Track (rT_isNWT4gQ) ✓
 

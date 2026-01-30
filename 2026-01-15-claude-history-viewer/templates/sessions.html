@@ -1,8 +1,5 @@
-{% extends "base.html" %}
-
-{% block title %}{{ project_path }} - Claude History{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}{{ project_path }} - Claude History{% endblock %} {%
+block content %}
 <h1>{{ project_path }}</h1>
 <ul class="item-list">
   {% for session in sessions %}

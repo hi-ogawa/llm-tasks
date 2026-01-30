@@ -10,11 +10,7 @@ import {
 } from "./reader.ts";
 import type { Message, ContentBlock } from "./reader.ts";
 
-type Handler = (
-  req: IncomingMessage,
-  res: ServerResponse,
-  params: Record<string, string>
-) => void;
+type Handler = (req: IncomingMessage, res: ServerResponse, params: Record<string, string>) => void;
 
 const routes: Array<{ pattern: RegExp; handler: Handler }> = [];
 
@@ -227,7 +223,7 @@ route("/", (_req, res) => {
           <a href="/project/${encodeURIComponent(p.encoded)}">${escapeHtml(p.decoded)}</a>
           <span class="session-meta">(${p.sessionCount} sessions)</span>
         </li>
-      `
+      `,
         )
         .join("")}
     </ul>
@@ -253,7 +249,7 @@ route("/project/:encoded", (_req, res, params) => {
           <span class="session-meta">${s.mtime.toISOString().slice(0, 16).replace("T", " ")} · ${s.sizeKB} KB</span>
           <div class="preview">${escapeHtml(s.preview)}${s.preview.length >= 80 ? "..." : ""}</div>
         </li>
-      `
+      `,
         )
         .join("")}
     </ul>
@@ -318,7 +314,7 @@ route("/search", (req, res) => {
           <span class="session-meta">${new Date(r.timestamp).toISOString().slice(0, 16).replace("T", " ")}</span>
           <div class="preview">${escapeHtml(r.display.slice(0, 100))}${r.display.length > 100 ? "..." : ""}</div>
         </li>
-      `
+      `,
         )
         .join("")}
     </ul>
@@ -329,8 +325,7 @@ route("/search", (req, res) => {
 
 function renderMessage(msg: Message): string {
   if (msg.type === "summary") {
-    const content =
-      typeof msg.message?.content === "string" ? msg.message.content : "";
+    const content = typeof msg.message?.content === "string" ? msg.message.content : "";
     return `
       <div class="message summary">
         <div class="message-label">Summary</div>
@@ -359,7 +354,7 @@ function renderMessage(msg: Message): string {
             <summary>Tool Result</summary>
             <pre><code>${escapeHtml(String(b.content || "").slice(0, 500))}</code></pre>
           </details>
-        `
+        `,
         )
         .join("");
       if (toolResults) {

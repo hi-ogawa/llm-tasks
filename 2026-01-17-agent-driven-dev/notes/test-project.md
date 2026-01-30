@@ -19,6 +19,7 @@ Faust porting:        Faust .dsp   →  faust-build crate   →  Rust (auto)
 ```
 
 **Agent task simplifies to**:
+
 1. Copy `.dsp` file from guitarix
 2. Set up `build.rs` with faust-build
 3. Write NIH-plug parameter mapping (boilerplate)
@@ -27,6 +28,7 @@ Faust porting:        Faust .dsp   →  faust-build crate   →  Rust (auto)
 **No manual DSP translation** - Faust compiler does it.
 
 Guitarix has **100+ Faust DSP files** ready to use:
+
 - `tremolo.dsp` (48 lines)
 - `distortion.dsp` (137 lines)
 - `compressor.dsp`, `chorus.dsp`, `delay.dsp`, etc.
@@ -50,36 +52,36 @@ See `refs/guitarix/trunk/src/LV2/faust/` for full list.
 
 ### Tier 1: Simple (good first target)
 
-| Plugin | Lines | Description |
-| --- | --- | --- |
-| `tremolo.dsp` | 48 | Vactrol tremolo model |
-| `bassbooster.dsp` | ~30 | Simple bass boost |
-| `echo.dsp` | ~50 | Basic delay |
+| Plugin            | Lines | Description           |
+| ----------------- | ----- | --------------------- |
+| `tremolo.dsp`     | 48    | Vactrol tremolo model |
+| `bassbooster.dsp` | ~30   | Simple bass boost     |
+| `echo.dsp`        | ~50   | Basic delay           |
 
 ### Tier 2: Medium
 
-| Plugin | Lines | Description |
-| --- | --- | --- |
-| `distortion.dsp` | 137 | Multi-band distortion |
-| `compressor.dsp` | ~100 | Compressor |
-| `chorus.dsp` | ~80 | Chorus effect |
-| `flanger.dsp` | ~80 | Flanger |
+| Plugin           | Lines | Description           |
+| ---------------- | ----- | --------------------- |
+| `distortion.dsp` | 137   | Multi-band distortion |
+| `compressor.dsp` | ~100  | Compressor            |
+| `chorus.dsp`     | ~80   | Chorus effect         |
+| `flanger.dsp`    | ~80   | Flanger               |
 
 ### Tier 3: Complex (stretch goal)
 
-| Plugin | Description |
-| --- | --- |
-| `gxamp*.dsp` | Tube amp simulations |
-| `freeverb.dsp` | Reverb algorithm |
+| Plugin         | Description          |
+| -------------- | -------------------- |
+| `gxamp*.dsp`   | Tube amp simulations |
+| `freeverb.dsp` | Reverb algorithm     |
 
 ### Alternative: Non-Faust plugins
 
 If testing manual DSP translation:
 
-| Plugin | Repo | Notes |
-| --- | --- | --- |
-| wolf-shaper | pdesaulniers/wolf-shaper | DPF, waveshaper, MIT |
-| noise-repellent | lucianodato/noise-repellent | FFT-based, GPL |
+| Plugin          | Repo                        | Notes                |
+| --------------- | --------------------------- | -------------------- |
+| wolf-shaper     | pdesaulniers/wolf-shaper    | DPF, waveshaper, MIT |
+| noise-repellent | lucianodato/noise-repellent | FFT-based, GPL       |
 
 ## Build Verification Strategy
 

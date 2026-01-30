@@ -1,101 +1,94 @@
-{% extends "base.html" %}
-
-{% block title %}Session - Claude History{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Session - Claude History{% endblock %} {% block content
+%}
 <p><a href="{{ url_for('project', encoded=project_encoded) }}">← Back to project</a></p>
 
 <div class="controls">
-  <label><input type="checkbox" id="show-thinking"> Show thinking</label>
-  <label><input type="checkbox" id="show-tools"> Show tool calls</label>
+  <label><input type="checkbox" id="show-thinking" /> Show thinking</label>
+  <label><input type="checkbox" id="show-tools" /> Show tool calls</label>
 </div>
 
 <div id="conversation">
-  {% for msg in messages %}
-    {% if msg.role == 'user' %}
-    <div class="message user">
-      <div class="message-role">User</div>
-      <div class="message-content markdown">{{ msg.content }}</div>
-    </div>
+  {% for msg in messages %} {% if msg.role == 'user' %}
+  <div class="message user">
+    <div class="message-role">User</div>
+    <div class="message-content markdown">{{ msg.content }}</div>
+  </div>
 
-    {% elif msg.role == 'tool_result' %}
-    <div class="message tool-result" style="display: none;">
-      {% for result in msg.results %}
-      <details>
-        <summary>Tool result</summary>
-        <pre>{{ result[:2000] }}{% if result|length > 2000 %}...{% endif %}</pre>
-      </details>
-      {% endfor %}
-    </div>
+  {% elif msg.role == 'tool_result' %}
+  <div class="message tool-result" style="display: none">
+    {% for result in msg.results %}
+    <details>
+      <summary>Tool result</summary>
+      <pre>{{ result[:2000] }}{% if result|length > 2000 %}...{% endif %}</pre>
+    </details>
+    {% endfor %}
+  </div>
 
-    {% elif msg.role == 'assistant' %}
-    <div class="message assistant">
-      <div class="message-role">Assistant</div>
-      {% for block in msg.blocks %}
-        {% if block.type == 'thinking' %}
-        <details class="thinking" style="display: none;">
-          <summary>Thinking</summary>
-          <div class="thinking-block">{{ block.content }}</div>
-        </details>
+  {% elif msg.role == 'assistant' %}
+  <div class="message assistant">
+    <div class="message-role">Assistant</div>
+    {% for block in msg.blocks %} {% if block.type == 'thinking' %}
+    <details class="thinking" style="display: none">
+      <summary>Thinking</summary>
+      <div class="thinking-block">{{ block.content }}</div>
+    </details>
 
-        {% elif block.type == 'text' %}
-        <div class="message-content markdown">{{ block.content }}</div>
+    {% elif block.type == 'text' %}
+    <div class="message-content markdown">{{ block.content }}</div>
 
-        {% elif block.type == 'tool_use' %}
-        <details class="tool-use" style="display: none;">
-          <summary><span class="tool-name">{{ block.name }}</span></summary>
-          <div class="tool-block">
-            <pre class="tool-input">{{ block.input[:1000] }}{% if block.input|length > 1000 %}...{% endif %}</pre>
-          </div>
-        </details>
-        {% endif %}
-      {% endfor %}
-    </div>
-    {% endif %}
-  {% endfor %}
+    {% elif block.type == 'tool_use' %}
+    <details class="tool-use" style="display: none">
+      <summary><span class="tool-name">{{ block.name }}</span></summary>
+      <div class="tool-block">
+        <pre class="tool-input">
+{{ block.input[:1000] }}{% if block.input|length > 1000 %}...{% endif %}</pre
+        >
+      </div>
+    </details>
+    {% endif %} {% endfor %}
+  </div>
+  {% endif %} {% endfor %}
 </div>
-{% endblock %}
-
-{% block scripts %}
+{% endblock %} {% block scripts %}
 <script>
-// Render markdown in all .markdown elements
-document.querySelectorAll('.markdown').forEach(el => {
-  el.innerHTML = marked.parse(el.textContent);
-});
-
-// Hide assistant cards that have no visible content
-function updateAssistantVisibility() {
-  const showThinking = document.getElementById('show-thinking').checked;
-  const showTools = document.getElementById('show-tools').checked;
-
-  document.querySelectorAll('.message.assistant').forEach(card => {
-    const hasText = card.querySelector('.message-content') !== null;
-    const hasThinking = card.querySelector('.thinking') !== null;
-    const hasTools = card.querySelector('.tool-use') !== null;
-
-    // Show if: has text, OR (has thinking AND showing thinking), OR (has tools AND showing tools)
-    const visible = hasText || (hasThinking && showThinking) || (hasTools && showTools);
-    card.style.display = visible ? 'block' : 'none';
+  // Render markdown in all .markdown elements
+  document.querySelectorAll(".markdown").forEach((el) => {
+    el.innerHTML = marked.parse(el.textContent);
   });
-}
 
-// Toggle thinking blocks
-document.getElementById('show-thinking').addEventListener('change', function() {
-  document.querySelectorAll('.thinking').forEach(el => {
-    el.style.display = this.checked ? 'block' : 'none';
+  // Hide assistant cards that have no visible content
+  function updateAssistantVisibility() {
+    const showThinking = document.getElementById("show-thinking").checked;
+    const showTools = document.getElementById("show-tools").checked;
+
+    document.querySelectorAll(".message.assistant").forEach((card) => {
+      const hasText = card.querySelector(".message-content") !== null;
+      const hasThinking = card.querySelector(".thinking") !== null;
+      const hasTools = card.querySelector(".tool-use") !== null;
+
+      // Show if: has text, OR (has thinking AND showing thinking), OR (has tools AND showing tools)
+      const visible = hasText || (hasThinking && showThinking) || (hasTools && showTools);
+      card.style.display = visible ? "block" : "none";
+    });
+  }
+
+  // Toggle thinking blocks
+  document.getElementById("show-thinking").addEventListener("change", function () {
+    document.querySelectorAll(".thinking").forEach((el) => {
+      el.style.display = this.checked ? "block" : "none";
+    });
+    updateAssistantVisibility();
   });
+
+  // Toggle tool calls
+  document.getElementById("show-tools").addEventListener("change", function () {
+    document.querySelectorAll(".tool-use, .tool-result").forEach((el) => {
+      el.style.display = this.checked ? "block" : "none";
+    });
+    updateAssistantVisibility();
+  });
+
+  // Initial visibility check
   updateAssistantVisibility();
-});
-
-// Toggle tool calls
-document.getElementById('show-tools').addEventListener('change', function() {
-  document.querySelectorAll('.tool-use, .tool-result').forEach(el => {
-    el.style.display = this.checked ? 'block' : 'none';
-  });
-  updateAssistantVisibility();
-});
-
-// Initial visibility check
-updateAssistantVisibility();
 </script>
 {% endblock %}

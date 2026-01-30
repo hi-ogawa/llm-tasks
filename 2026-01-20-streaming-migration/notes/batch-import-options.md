@@ -67,17 +67,20 @@ def main():
 3. Re-run script → uses saved session
 
 ### Pros
+
 - No API quota limits
 - Full control over flow
 - Can handle edge cases (already in playlist, etc.)
 
 ### Cons
+
 - YouTube UI changes break selectors (maintenance burden)
 - Slower (~3-5 sec per video)
 - Needs visible browser (or careful headless setup)
 - Risk of being flagged as bot if too fast
 
 ### Time estimate
+
 - 700 videos × 4 sec = ~47 minutes
 - With errors/retries: ~1-2 hours
 
@@ -101,46 +104,47 @@ def main():
 // @grant        none
 // ==/UserScript==
 
-(function() {
-    'use strict';
+(function () {
+  "use strict";
 
-    // Add floating button
-    const btn = document.createElement('button');
-    btn.textContent = 'Batch Add';
-    btn.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9999;padding:10px;';
-    document.body.appendChild(btn);
+  // Add floating button
+  const btn = document.createElement("button");
+  btn.textContent = "Batch Add";
+  btn.style.cssText = "position:fixed;top:10px;right:10px;z-index:9999;padding:10px;";
+  document.body.appendChild(btn);
 
-    btn.onclick = async () => {
-        const input = prompt('Paste video IDs (one per line):');
-        if (!input) return;
+  btn.onclick = async () => {
+    const input = prompt("Paste video IDs (one per line):");
+    if (!input) return;
 
-        const ids = input.trim().split('\n').filter(Boolean);
+    const ids = input.trim().split("\n").filter(Boolean);
 
-        for (const id of ids) {
-            console.log(`Adding ${id}...`);
+    for (const id of ids) {
+      console.log(`Adding ${id}...`);
 
-            // Navigate
-            window.location.href = `https://www.youtube.com/watch?v=${id}`;
-            await sleep(3000);
+      // Navigate
+      window.location.href = `https://www.youtube.com/watch?v=${id}`;
+      await sleep(3000);
 
-            // Click save button
-            const saveBtn = document.querySelector('button[aria-label="Save to playlist"]');
-            saveBtn?.click();
-            await sleep(1000);
+      // Click save button
+      const saveBtn = document.querySelector('button[aria-label="Save to playlist"]');
+      saveBtn?.click();
+      await sleep(1000);
 
-            // Click playlist checkbox
-            const playlistItem = [...document.querySelectorAll('tp-yt-paper-checkbox')]
-                .find(el => el.textContent.includes('Good music'));
-            playlistItem?.click();
-            await sleep(1000);
-        }
-
-        alert('Done!');
-    };
-
-    function sleep(ms) {
-        return new Promise(r => setTimeout(r, ms));
+      // Click playlist checkbox
+      const playlistItem = [...document.querySelectorAll("tp-yt-paper-checkbox")].find((el) =>
+        el.textContent.includes("Good music"),
+      );
+      playlistItem?.click();
+      await sleep(1000);
     }
+
+    alert("Done!");
+  };
+
+  function sleep(ms) {
+    return new Promise((r) => setTimeout(r, ms));
+  }
 })();
 ```
 
@@ -151,22 +155,24 @@ Instead of navigating away, open videos in hidden iframe or use YouTube's intern
 ```javascript
 // Use YouTube's internal save endpoint (reverse-engineered)
 async function addToPlaylist(videoId, playlistId) {
-    const response = await fetch('https://www.youtube.com/youtubei/v1/browse/edit_playlist', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `SAPISIDHASH ${getSapisidHash()}`,
+  const response = await fetch("https://www.youtube.com/youtubei/v1/browse/edit_playlist", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `SAPISIDHASH ${getSapisidHash()}`,
+    },
+    body: JSON.stringify({
+      context: getYouTubeContext(),
+      actions: [
+        {
+          addedVideoId: videoId,
+          action: "ACTION_ADD_VIDEO",
         },
-        body: JSON.stringify({
-            context: getYouTubeContext(),
-            actions: [{
-                addedVideoId: videoId,
-                action: 'ACTION_ADD_VIDEO'
-            }],
-            playlistId: playlistId
-        })
-    });
-    return response.json();
+      ],
+      playlistId: playlistId,
+    }),
+  });
+  return response.json();
 }
 ```
 
@@ -188,11 +194,13 @@ jq -r 'select(.confidence == "high" or .confidence == "medium") | .video_id' dat
 ```
 
 ### Pros
+
 - Runs in your real browser session (no bot detection)
 - No external dependencies
 - Quick to set up and iterate
 
 ### Cons
+
 - Manual trigger (paste IDs)
 - YouTube internal APIs may change
 - Harder to track progress/errors
@@ -202,14 +210,14 @@ jq -r 'select(.confidence == "high" or .confidence == "medium") | .video_id' dat
 
 ## Comparison
 
-| Aspect | Playwright | Userscript |
-|--------|------------|------------|
-| Setup complexity | Medium (install playwright) | Low (browser extension) |
-| Maintenance | High (selectors break) | Medium (internal API changes) |
-| Speed | ~4 sec/video | 1-3 sec/video (with internal API) |
-| Reliability | Medium | Medium |
-| Progress tracking | Easy (Python logging) | Manual |
-| Bot detection risk | Higher | Lower |
+| Aspect             | Playwright                  | Userscript                        |
+| ------------------ | --------------------------- | --------------------------------- |
+| Setup complexity   | Medium (install playwright) | Low (browser extension)           |
+| Maintenance        | High (selectors break)      | Medium (internal API changes)     |
+| Speed              | ~4 sec/video                | 1-3 sec/video (with internal API) |
+| Reliability        | Medium                      | Medium                            |
+| Progress tracking  | Easy (Python logging)       | Manual                            |
+| Bot detection risk | Higher                      | Lower                             |
 
 ## Recommendation
 

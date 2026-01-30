@@ -3,17 +3,7 @@ name = "ml-transcription"
 version = "0.1.0"
 description = "ML-assisted bass transcription workflow"
 requires-python = ">=3.11"
-dependencies = [
-    "basic-pitch",
-    "demucs",
-    "music21",
-    "pretty_midi",
-    "librosa",
-]
+dependencies = ["basic-pitch", "demucs", "music21", "pretty_midi", "librosa"]
 
 [project.optional-dependencies]
-train = [
-    "transformers",
-    "datasets",
-    "torch",
-]
+train = ["transformers", "datasets", "torch"]

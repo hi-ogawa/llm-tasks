@@ -102,14 +102,14 @@ Or configure in `settings.json`:
 
 ## Comparison
 
-| Aspect | Docker Sandbox | DevContainer | Native Sandbox |
-| --- | --- | --- | --- |
-| Isolation level | High (container) | High (container) | Medium (OS-level) |
-| Setup effort | Minimal | Moderate | Minimal |
-| Customization | Low | High | Medium |
-| Docker required | Yes | Yes | No |
-| Ralph loop ready | Yes | Yes | Partial |
-| Full permissions | Yes (default) | Yes (flag) | No (still prompts) |
+| Aspect           | Docker Sandbox   | DevContainer     | Native Sandbox     |
+| ---------------- | ---------------- | ---------------- | ------------------ |
+| Isolation level  | High (container) | High (container) | Medium (OS-level)  |
+| Setup effort     | Minimal          | Moderate         | Minimal            |
+| Customization    | Low              | High             | Medium             |
+| Docker required  | Yes              | Yes              | No                 |
+| Ralph loop ready | Yes              | Yes              | Partial            |
+| Full permissions | Yes (default)    | Yes (flag)       | No (still prompts) |
 
 ## For Ralph Loop Specifically
 

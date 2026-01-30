@@ -23,13 +23,13 @@ That's it. An infinite loop feeding the same prompt repeatedly.
 
 ## Key Principles
 
-| Principle | Meaning |
-| --- | --- |
-| Naive persistence | Keep trying until success criteria met |
-| Files are memory | State lives in filesystem, not context |
+| Principle              | Meaning                                      |
+| ---------------------- | -------------------------------------------- |
+| Naive persistence      | Keep trying until success criteria met       |
+| Files are memory       | State lives in filesystem, not context       |
 | Iteration > perfection | Continuous refinement beats upfront planning |
-| Operator skill | Success reflects prompt engineering ability |
-| Right-sized tasks | Each task must fit in one context window |
+| Operator skill         | Success reflects prompt engineering ability  |
+| Right-sized tasks      | Each task must fit in one context window     |
 
 ## Practical Implementations
 

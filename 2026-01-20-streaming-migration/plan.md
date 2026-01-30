@@ -5,6 +5,7 @@
 **Question:** Can YouTube + YouTube Music replace VLC workflow?
 
 **Research:** See `notes/youtube-music-library.md`
+
 - Artists tab only shows Art Tracks (official music with ISRCs)
 - Linked music videos can be added to library via YT Music
 - Regular videos (covers, live performances) → Liked playlist only
@@ -12,6 +13,7 @@
 **Conclusion:** Yes, workable.
 
 New workflow:
+
 1. Add to "Good music" playlist on YouTube
 2. Async review on YT Music → "Add to library" if available
 3. Listen on mobile
@@ -38,6 +40,7 @@ grep '\.opus"$' data/files.txt | \
 `scripts/search_youtube.py` - async batch YouTube search
 
 **Usage:**
+
 ```bash
 python search_youtube.py --start 0 --end 100      # test batch
 python search_youtube.py --overwrite              # full run, overwrite
@@ -45,11 +48,13 @@ python search_youtube.py --concurrency 5          # slower, gentler
 ```
 
 **How it works:**
+
 - Runs `yt-dlp --flat-playlist -j "ytsearch1:{query}"` for each line
 - Async with semaphore for parallel execution
 - Outputs JSONL with: index, query, video_id, title, channel, view_count, confidence
 
 **Confidence scoring:**
+
 - `high` = artist in channel/title AND song in title
 - `medium` = artist OR song matches
 - `low` = neither matches (likely false positive)
@@ -60,12 +65,14 @@ python search_youtube.py --concurrency 5          # slower, gentler
 `scripts/rescore.py` - re-process confidence scores without re-searching
 
 **Usage:**
+
 ```bash
 uv run rescore.py                # re-score in place
 uv run rescore.py -o new.jsonl   # output to different file
 ```
 
 **Why separate script:**
+
 - Tweak scoring algorithm without re-running 738 YouTube searches
 - Normalizes punctuation (`-:_.'` etc.) for fuzzy matching
 - Handles Windows filename artifacts (e.g., `ME-I` vs `ME:I`)
@@ -73,18 +80,26 @@ uv run rescore.py -o new.jsonl   # output to different file
 ### Output
 
 `data/results.jsonl` - one JSON object per line:
+
 ```json
-{"index": 0, "query": "APRIL - Dream Candy", "video_id": "H2T1yZbTMzo", "title": "...", "channel": "1theK", "confidence": "high"}
+{
+  "index": 0,
+  "query": "APRIL - Dream Candy",
+  "video_id": "H2T1yZbTMzo",
+  "title": "...",
+  "channel": "1theK",
+  "confidence": "high"
+}
 ```
 
 **Results (738 queries):**
 
-| Confidence | Count | % |
-|------------|-------|---|
-| high | 545 | 74% |
-| medium | 158 | 21% |
-| low | 31 | 4% |
-| none | 4 | 1% |
+| Confidence | Count | %   |
+| ---------- | ----- | --- |
+| high       | 545   | 74% |
+| medium     | 158   | 21% |
+| low        | 31    | 4%  |
+| none       | 4     | 1%  |
 
 703/738 (95%) high or medium → ready for import
 
@@ -114,6 +129,7 @@ review-low.tsv and review-none.tsv are manually handled and added to the playlis
 ### Automation scripts
 
 **Research:** Evaluated batch import options in `notes/batch-import-options.md`
+
 - Chose `ytmusicapi` (Python library that emulates YT Music web client)
 - Requires browser auth from `music.youtube.com` (not youtube.com)
 
@@ -152,6 +168,7 @@ uv run python scripts/export_non_library.py -s PL7sA_SkHX5ydlos2CA-8zf9Smx3Ph7xt
 ```
 
 **What it does:**
+
 - Reads source playlist, filters to non-ATV tracks (OMV/UGC)
 - Skips tracks already in target playlist
 - Adds remaining to fallback playlist
@@ -168,12 +185,14 @@ Run 4: 0 to add → done
 ```
 
 **How "Add to library" works:**
+
 - Only Art Tracks (MUSIC_VIDEO_TYPE_ATV) can be added to library
 - `get_playlist()` returns `feedbackTokens` directly for ATVs (no album fetch needed)
 - Calls `edit_song_library_status()` with tokens
 - OMV/UGC are skipped (no library support)
 
 **Auth validation:**
+
 - Uses known counterpart pair (Dirty Loops - Next to You) as auth check
 - Stale auth causes `get_playlist()` to return degraded data (missing album info, missing tokens)
 - See `notes/art-track-mapping.md` for counterpart API research
@@ -183,11 +202,13 @@ Run 4: 0 to add → done
 ⚠️ **WARNING: Credentials go stale quickly (hours, not days)**
 
 Symptoms of stale auth:
+
 - Script runs but adds fewer tracks than expected
 - `get_playlist()` returns ATVs without `feedbackTokens`
 - Counterpart lookups return `None`
 
 To refresh:
+
 1. Go to `music.youtube.com` (logged in)
 2. DevTools → Network → find any `/browse` POST request
 3. Copy `Authorization` and `Cookie` headers
@@ -195,12 +216,12 @@ To refresh:
 
 ```json
 {
-    "Accept": "*/*",
-    "Authorization": "===== paste here =====",
-    "Content-Type": "application/json",
-    "X-Goog-AuthUser": "0",
-    "x-origin": "https://music.youtube.com",
-    "Cookie": "===== paste here ======"
+  "Accept": "*/*",
+  "Authorization": "===== paste here =====",
+  "Content-Type": "application/json",
+  "X-Goog-AuthUser": "0",
+  "x-origin": "https://music.youtube.com",
+  "Cookie": "===== paste here ======"
 }
 ```
 
