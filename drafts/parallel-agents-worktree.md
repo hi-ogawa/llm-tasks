@@ -56,6 +56,6 @@ $ git worktree list
 Remove entirely:
 
 ```bash
-git worktree remove ../repo-wt-1
-git branch -d worktree-1  # branch persists, delete separately
+git worktree remove ../repo-wt-1  # or: rm -rf + git worktree prune
+git branch -d repo-wt-1           # branch persists, delete separately
 ```
