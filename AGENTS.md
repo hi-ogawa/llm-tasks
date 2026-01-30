@@ -9,7 +9,7 @@ Portable workflow conventions for any coding agent (Claude Code, opencode, Codex
 For lightweight questions that don't need a dedicated task:
 
 1. Just answer in conversation (ephemeral)
-2. If user wants to keep it: append to `notes/scratch.md` with date header
+2. If user wants to keep it: write to `drafts/<topic>.md`
 3. If it grows substantial: user can say "let's make this a task" → promote to full task
 
 ### Starting a New Task
@@ -18,7 +18,7 @@ When user says "new task [topic]", "explore [topic]", or similar:
 
 1. Create `YYYY-MM-DD-[topic]/`
 2. Create `README.md` with brief overview (what, why)
-3. Create `plan.md` for detailed planning and progress
+3. Create `plan.md` for detailed planning
 4. Create `notes/` directory
 5. Begin working in that directory
 
@@ -34,10 +34,11 @@ When user says "continue [topic]" or references an existing task:
 
 When user says "done", "finish", "let's commit", or "save and push":
 
-1. `git add -A`
-2. `git commit -m "[descriptive message based on work done]"`
-3. `git push`
-4. Confirm completion to user
+1. For research tasks: review for consistency across files
+2. `git add -A`
+3. `git commit -m "[descriptive message based on work done]"`
+4. `git push`
+5. Confirm completion to user
 
 ### Syncing
 
@@ -49,6 +50,7 @@ When user says "sync" or "pull latest":
 ## Directory Structure
 
 ```
+drafts/                # Lightweight notes, not yet tasks
 YYYY-MM-DD-[topic]/
   README.md      # What and why (brief)
   plan.md        # Detailed planning
@@ -66,8 +68,8 @@ Shorthand commands for common workflow actions. The `[command]` syntax works wel
 | `[q]`        | Quick question - answer ephemerally, no files            |
 | `[new]`      | Create new task directory, scaffold files, start working |
 | `[continue]` | Find task, read context, resume                          |
-| `[note]`     | Append to `notes/scratch.md` with timestamp              |
-| `[promote]`  | Convert scratch notes into dedicated task                |
+| `[draft]`    | Write to `drafts/<topic>.md`                             |
+| `[promote]`  | Convert draft into dedicated task                        |
 | `[done]`     | Git add, commit (with message), push                     |
 | `[sync]`     | Git pull --rebase --autostash                            |
 
@@ -76,8 +78,7 @@ Examples:
 ```
 [q] what's the difference between MCP and LSP?
 [new] vim-keybindings
-[note] check out this approach for modal editing
-[save]
+[draft] check out this approach for modal editing
 [done] added research on directory-backed chat
 ```
 
