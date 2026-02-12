@@ -11,6 +11,8 @@
 
 ### archinstall
 
+Make sure you have internet connection (e.g. USB tethering)
+
 Run the guided installer:
 
 ```bash
@@ -34,7 +36,7 @@ Menu items (as of 2026-01):
 | Applications              | Audio: pipewire, Bluetooth: enabled       |
 | Network configuration     | NetworkManager                            |
 | Parallel Downloads        | 5 (speeds up install)                     |
-| Additional packages       | `git base-devel`                          |
+| Additional packages       | (empty. can do post-install)              |
 | Timezone                  | Your timezone                             |
 | Automatic time sync (NTP) | true (default)                            |
 
@@ -65,6 +67,7 @@ Via **gnome-tweaks**:
 - install Yay
 
 ```bash
+pacman -S git base-devel
 git clone https://aur.archlinux.org/yay-bin.git ~/code/installed/yay-bin
 cd ~/code/installed/yay-bin
 makepkg -si
@@ -73,7 +76,7 @@ makepkg -si
 - more packages
 
 ```bash
-yay -S google-chrome visual-studio-code-insiders-bin wezterm ttf-roboto-mono noto-fonts-cjk
+yay -S google-chrome visual-studio-code-bin wezterm ttf-roboto-mono noto-fonts-cjk
 ```
 
 - install Homebrew
