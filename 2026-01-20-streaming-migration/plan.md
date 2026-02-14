@@ -226,3 +226,57 @@ To refresh:
 ```
 
 The script validates auth using a known counterpart pair before proceeding.
+
+---
+
+## Phase 4: Post-migration cleanup & re-baseline (2026-02-14) ✅
+
+### What changed
+
+- Initial migration had false positives where search picked non-ATV videos
+- Manual review/replacement pass was done on PC against `Good music`
+- Some distributor channels (`1theK`, `avex`) were kept when mapping behaved correctly
+
+### Manual cleanup workflow that worked
+
+1. Open `Good music` in YT Music web
+2. Spot obvious false positives (wrong upload/non-official-ish content)
+3. Search artist + title in YT Music
+4. Add better official/ATV-mapped candidate first
+5. Remove old wrong entry second (never remove first)
+
+This was efficient enough and avoided over-automation complexity.
+
+### Re-audit commands
+
+```bash
+uv run python scripts/playlist_to_library.py -p PL7sA_SkHX5ydlos2CA-8zf9Smx3Ph7xtE -n
+uv run python scripts/export_non_library.py -s PL7sA_SkHX5ydlos2CA-8zf9Smx3Ph7xtE -t PL7sA_SkHX5ycNBiSYfwrSwp_xO50JcF0G -n
+uv run python scripts/find_duplicates.py -p PL7sA_SkHX5ydlos2CA-8zf9Smx3Ph7xtE
+```
+
+### Re-audit snapshot
+
+From `playlist_to_library.py -n`:
+
+- Total: 713
+- Art Tracks to add: 156
+- Already in library: 441
+- Skipped non-ATV: 116
+
+Derived:
+
+- ATV = 597/713 (83.7%)
+- Non-ATV = 116/713 (16.3%)
+
+### Auth acquisition (Chrome)
+
+New helper script:
+
+```bash
+uv run python scripts/chrome_auth_to_ytmusic.py
+```
+
+Input format: one Chrome DevTools `Copy as cURL (bash)` request from `music.youtube.com`.
+
+Then validate with dry run before any write operations.
