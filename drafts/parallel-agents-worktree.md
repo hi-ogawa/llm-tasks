@@ -17,12 +17,12 @@ Same ergonomics otherwise - `cd` in, work normally.
 ## One-Time Setup
 
 ```bash
-git worktree add ../repo-wt-1
+git worktree add ../repo-wt1
 ```
 
-Creates `repo-wt-1` branch from current HEAD. Explicit branch optional: `-b branch-name base`.
+Creates `repo-wt1` branch from current HEAD. Explicit branch optional: `-b branch-name base`.
 
-`repo-wt-1` _is_ your `main` in that worktree.
+`repo-wt1` _is_ your `main` in that worktree.
 
 ## Workflow
 
@@ -39,7 +39,7 @@ git fetch origin
 git reset --hard origin/main
 git checkout -b feature/x
 # work, commit, push, PR...
-git checkout worktree-1
+git checkout repo-wt1
 ```
 
 ## Commands
@@ -49,13 +49,13 @@ List all worktrees (from any worktree):
 ```bash
 $ git worktree list
 /path/to/repo    cf27bce [main]
-/path/to/repo-wt-1  52b819d [repo-wt-1]
+/path/to/repo-wt1  52b819d [repo-wt1]
 /path/to/repo-wt-2  20e00ef [repo-wt-2]
 ```
 
 Remove entirely:
 
 ```bash
-git worktree remove ../repo-wt-1  # or: rm -rf + git worktree prune
-git branch -d repo-wt-1           # branch persists, delete separately
+git worktree remove ../repo-wt1  # or: rm -rf + git worktree prune
+git branch -d repo-wt1           # branch persists, delete separately
 ```
