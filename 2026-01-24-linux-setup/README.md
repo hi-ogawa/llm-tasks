@@ -1,5 +1,8 @@
 # Linux Setup Consolidation
 
+> [!NOTE]
+> See https://github.com/hi-ogawa/linux-setup/ for latest.
+
 Setting up Arch Linux on a spare Dell laptop.
 
 ## Decisions
